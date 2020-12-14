@@ -1,0 +1,25 @@
+.header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 3em;
+    background-color: white;
+    z-index: 10;
+    
+    .nav{
+        width: 90%;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        
+        .logoWrapper{
+            width: 150px;
+            text-transform: uppercase;
+        }
+    }
+}

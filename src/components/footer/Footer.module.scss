@@ -1,0 +1,18 @@
+.wrapper{
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+    height: 5em;
+
+    .copyright{
+        margin-top: 1em;
+        font-size: .6em;
+        font-weight: 300;
+        letter-spacing: .25em;
+        opacity: .5;
+    }
+}

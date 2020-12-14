@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, BrowserRouter, Route } from "react-router-dom";
+import ItemDetails from "./components/itemDetails/ItemDetails";
+import Main from "./pages/Main";
+import CartDetails from "./components/cartDetails/CartDetails";
+import MainTemplate from "./templates/MainTemplate";
+import shoesStore from "./stores/shoesStore";
+import { Provider } from "react-redux";
+import "./App.scss";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={shoesStore}>
+      <BrowserRouter>
+        <MainTemplate>
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route exact path="/items/:id" component={ItemDetails} />
+            <Route exact path="/cart" component={CartDetails} />
+          </Switch>
+        </MainTemplate>
+      </BrowserRouter>
+    </Provider>
   );
-}
+};
 
 export default App;
