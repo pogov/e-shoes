@@ -14,3 +14,7 @@ export const getItems = () => (dispatch: ({ type }: DispatchProp) => void) => {
       dispatch({ type: "GET_ITEMS_SUCCES", payload: data });
     });
 };
+
+export const getOneItem = (id: string) => {
+  return { type: "GET_ONE_ITEM", payload: id };
+};
