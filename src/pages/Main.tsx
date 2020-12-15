@@ -8,9 +8,9 @@ const Main: React.FC = ({ getItems }: any) => {
     getItems();
   });
   return (
-    <div style={{ paddingTop: "50px", width: "90%", margin: "0 auto" }}>
+    <main style={{ paddingTop: "50px", width: "90%", margin: "0 auto" }}>
       <ItemsList />
-    </div>
+    </main>
   );
 };
 
@@ -21,11 +21,3 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 export default connect(null, mapDispatchToProps)(Main);
-
-// const [items, setItems] = useState<ItemsListProps[]>([]);
-// useEffect(() => {
-//   fetch("http://localhost:5500/api/items")
-//     .then((res) => res.json())
-//     .then((data) => setItems(data))
-//     .catch((err) => console.error(err));
-// }, []);

@@ -1,26 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./ItemDetails.module.scss";
+import DropdownMenu from "../dropDown/DropdownMenu";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-import { connect } from "react-redux";
 
-// interface ParamType {
-//   id: string;
-// }
+type ItemDetailsProps = {
+  item: ItemsListProps;
+  chosenSize: number;
+  handleClick: (e: MouseEvent) => void;
+};
 
-const ItemDetails: React.FC = ({ shoe }: any) => {
-  // const { id } = useParams<ParamType>();
-  // const [item, setItem] = React.useState<ItemsListProps>();
+const ItemDetails: React.FC<ItemDetailsProps> = ({
+  item,
+  chosenSize,
+  handleClick,
+}) => {
+  if (!item) return null;
 
-  // !!!!! zwalidować działanie (min max id) przycisków prev i next !!!!!!!!!!!
+  const isChosenSize = chosenSize !== 0;
 
-  // if (!item) return null;
-  // const [shoe] = oneItem;
+  const { sizes, type, description, name, price, imgSrc, tags } = item;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.grid}>
-        <img src={shoe.imgSrc} alt="" />
+        <img src={imgSrc} alt={name} />
         <div className={styles.details}>
           <nav>
             <Link className={styles.backBtn} to="/">
@@ -34,28 +38,32 @@ const ItemDetails: React.FC = ({ shoe }: any) => {
             </Link> */}
           </nav>
           <div className={styles.productDetails}>
-            <p>category: {shoe.type}</p>
-            <h2>{shoe.name}</h2>
-            {/* <p>model number: {id}</p> */}
+            <p>category: {type}</p>
+            <h2>{name}</h2>
             <p>available sizes:</p>
             <ul>
-              {shoe.sizes.map((size: number) => (
+              {sizes.map((size) => (
                 <li key={size}>{size}</li>
               ))}
             </ul>
           </div>
           <div className={styles.productPrice}>
-            <p>{shoe.price} PLN</p>
+            <p>{price} PLN</p>
           </div>
           <div className={styles.btnContainer}>
-            <p>choose size</p>
+            {isChosenSize && <p>your size: {chosenSize}</p>}
+            <DropdownMenu
+              list={sizes}
+              header="choose size"
+              handler={handleClick}
+            />
             <br />
             <button>add to cart</button>
           </div>
         </div>
         <div className={styles.description}>
           <h3>Product description:</h3>
-          <p>{shoe.description}</p>
+          <p>{description}</p>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus
             deserunt suscipit blanditiis id provident placeat quis atque autem
@@ -65,7 +73,7 @@ const ItemDetails: React.FC = ({ shoe }: any) => {
           </p>
           <div className={styles.tags}>
             <p>Tags:</p>
-            {shoe.tags.map((tag: string) => (
+            {tags.map((tag) => (
               <p key={tag}>{tag}</p>
             ))}
           </div>
@@ -75,11 +83,4 @@ const ItemDetails: React.FC = ({ shoe }: any) => {
   );
 };
 
-const mapStateToProps = (state: ItemsListProps[], ownProps: any) => {
-  const shoe = state.find((item) => item._id === ownProps.match.params.id);
-  return {
-    shoe,
-  };
-};
-
-export default connect(mapStateToProps)(ItemDetails);
+export default ItemDetails;

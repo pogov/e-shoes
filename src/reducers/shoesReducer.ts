@@ -3,7 +3,7 @@ export const shoesReducer = (state: ItemsListProps[] = [], action: any) => {
   switch (action.type) {
     case "GET_ITEMS_SUCCES":
       const { payload } = action;
-      return [...state, ...payload];
+      return [...payload];
     default:
       break;
   }

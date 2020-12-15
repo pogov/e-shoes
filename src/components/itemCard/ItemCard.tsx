@@ -11,8 +11,8 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
       </Link>
       <div className={styles.info}>
         <div>
-          <p>name: {item.name}</p>
-          <p>price: {item.price} $</p>
+          <p>{item.name}</p>
+          <p>{item.price} $</p>
         </div>
         <button
           onClick={() => console.log(`add to cart item nr: ${item._id}`)}
