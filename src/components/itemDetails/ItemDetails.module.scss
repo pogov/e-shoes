@@ -91,6 +91,11 @@
                     @include btn-reset;
                     @include btn-style;
                 }
+
+                .error{
+                    color: red;
+                    font-weight: bold;
+                }
             }
         }
     }

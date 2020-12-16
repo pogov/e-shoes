@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
 import Main from "./pages/Main";
 import CartDetails from "./components/cartDetails/CartDetails";
 import MainTemplate from "./templates/MainTemplate";
-import "./App.scss";
 import ItemDetailsTemplate from "./templates/ItemDetailsTemplate";
 import { getItems } from "./actions/shoesActions";
-import { connect } from "react-redux";
+import "./App.scss";
 
 const App: React.FC = ({ getItems }: any) => {
-  React.useEffect(() => {
+  useEffect(() => {
     getItems(1, 9);
   }, [getItems]);
+
   return (
     <BrowserRouter>
       <MainTemplate>

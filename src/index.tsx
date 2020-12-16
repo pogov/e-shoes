@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import shoesStore from "./stores/shoesStore";
+import store from "./stores/store";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={shoesStore}>
+    <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>,

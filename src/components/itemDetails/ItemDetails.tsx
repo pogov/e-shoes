@@ -1,25 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ItemDetails.module.scss";
 import DropdownMenu from "../dropDown/DropdownMenu";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
+import { connect } from "react-redux";
+import { addToCart } from "../../actions/cartActions";
 
 type ItemDetailsProps = {
   item: ItemsListProps;
   chosenSize: number;
   handleClick: (e: MouseEvent) => void;
+  addItemToCart: (i: string, s: number, p: number) => void;
 };
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
   item,
   chosenSize,
   handleClick,
+  addItemToCart,
 }) => {
-  if (!item) return null;
+  const [error, setError] = useState("");
 
   const isChosenSize = chosenSize !== 0;
 
-  const { sizes, type, description, name, price, imgSrc, tags } = item;
+  if (!item) return null;
+
+  const { sizes, type, description, name, price, imgSrc, tags, _id } = item;
+
+  const handleAddItem = () => {
+    if (!isChosenSize) {
+      setError("Please chose your size");
+      return;
+    }
+    addItemToCart(_id, chosenSize, price);
+    setError("");
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -30,12 +45,6 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <Link className={styles.backBtn} to="/">
               back to product list
             </Link>
-            {/* <Link to={`/items/${parseInt(id) - 1}`} className={styles.navBtn}>
-              prev
-            </Link> */}
-            {/* <Link to={`/items/${parseInt(id) + 1}`} className={styles.navBtn}>
-              next
-            </Link> */}
           </nav>
           <div className={styles.productDetails}>
             <p>category: {type}</p>
@@ -58,7 +67,10 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
               handler={handleClick}
             />
             <br />
-            <button>add to cart</button>
+            <button onClick={handleAddItem}>add to cart</button>
+            {error.length > 0 && !isChosenSize && (
+              <p className={styles.error}>{error}</p>
+            )}
           </div>
         </div>
         <div className={styles.description}>
@@ -83,4 +95,9 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   );
 };
 
-export default ItemDetails;
+const mapDispatchToProps = (dispatch: any) => ({
+  addItemToCart: (id: string, size: number, price: number) =>
+    dispatch(addToCart(id, size, price)),
+});
+
+export default connect(null, mapDispatchToProps)(ItemDetails);

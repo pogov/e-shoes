@@ -14,11 +14,11 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
           <p>{item.name}</p>
           <p>{item.price} $</p>
         </div>
-        <button
+        {/* <button
           onClick={() => console.log(`add to cart item nr: ${item._id}`)}
           className={styles.addBtn}>
           add to cart
-        </button>
+        </button> */}
       </div>
     </div>
   );

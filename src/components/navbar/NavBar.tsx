@@ -9,7 +9,7 @@ const NavBar: React.FC = () => {
         <div className={styles.logoWrapper}>logo</div>
         {/* searchbar and filterbar comp */}
         {/* links / categories */}
-        <CartIcon isItem={true} />
+        <CartIcon />
       </nav>
     </header>
   );

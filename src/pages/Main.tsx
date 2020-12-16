@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import styles from "./Main.module.scss";
 import ItemsList from "../components/itemsList/ItemsList";
 import { getItems } from "../actions/shoesActions";
-import { connect } from "react-redux";
 
 const Main: React.FC = ({ getItems, next, previous }: any) => {
   const [isMore, setIsMore] = useState(true);
+
   const handleClick = (next: any, prev: any) => {
     if (!next) return;
     getItems(next.page, next.limit);
   };
+
   useEffect(() => {
     if (!next) setIsMore(false);
   }, [next]);
+
   return (
     <main className={styles.wrapper}>
       <ItemsList />
