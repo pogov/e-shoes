@@ -1,23 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import styles from "./Main.module.scss";
 import ItemsList from "../components/itemsList/ItemsList";
 import { getItems } from "../actions/shoesActions";
 import { connect } from "react-redux";
 
-const Main: React.FC = ({ getItems }: any) => {
+const Main: React.FC = ({ getItems, next, previous }: any) => {
+  const [isMore, setIsMore] = useState(true);
+  const handleClick = (next: any, prev: any) => {
+    if (!next) return;
+    getItems(next.page, next.limit);
+  };
   useEffect(() => {
-    getItems();
-  });
+    if (!next) setIsMore(false);
+  }, [next]);
   return (
-    <main style={{ paddingTop: "50px", width: "90%", margin: "0 auto" }}>
+    <main className={styles.wrapper}>
       <ItemsList />
+      {isMore && (
+        <button
+          onClick={() => handleClick(next, previous)}
+          className={styles.moreBtn}>
+          load more
+        </button>
+      )}
     </main>
   );
 };
 
+const mapStateToProps = (state: any) => {
+  const { next, previous } = state;
+  return { next, previous };
+};
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getItems: () => dispatch(getItems()),
+    getItems: (page: number, limit: number) => dispatch(getItems(page, limit)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

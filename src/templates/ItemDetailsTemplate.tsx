@@ -46,8 +46,10 @@ const ItemDetailsTemplate: React.FC = ({ shoe }: any) => {
   );
 };
 
-const mapStateToProps = (state: ItemsListProps[], ownProps: any) => {
-  const shoe = state.find((item) => item._id === ownProps.match.params.id);
+const mapStateToProps = (state: any, ownProps: any) => {
+  const shoe = state.shoes.find(
+    (item: ItemsListProps) => item._id === ownProps.match.params.id,
+  );
   return {
     shoe,
   };

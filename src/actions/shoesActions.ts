@@ -5,13 +5,15 @@ type DispatchProp = {
   payload?: ItemsListProps[];
 };
 
-export const getItems = () => (dispatch: ({ type }: DispatchProp) => void) => {
+export const getItems = (page: number, limit: number) => (
+  dispatch: ({ type }: DispatchProp) => void,
+) => {
   dispatch({ type: "GET_ITEMS_REQUEST" });
 
-  return fetch("http://localhost:5500/api/items")
+  return fetch(`http://localhost:5500/api/items?page=${page}&limit=${limit}`)
     .then((res) => res.json())
-    .then((data) => {
-      dispatch({ type: "GET_ITEMS_SUCCES", payload: data });
+    .then((result) => {
+      dispatch({ type: "GET_ITEMS_SUCCES", payload: result });
     });
 };
 

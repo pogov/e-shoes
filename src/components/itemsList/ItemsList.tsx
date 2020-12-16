@@ -9,6 +9,7 @@ type ItemsType = {
 };
 
 const ItemsList = ({ items }: ItemsType) => {
+  console.log(items);
   return (
     <div className={styles.wrapper}>
       {items && items.map((item) => <ItemCard key={item._id} {...item} />)}
@@ -17,7 +18,7 @@ const ItemsList = ({ items }: ItemsType) => {
 };
 
 const mapStateToProps = (state: any) => ({
-  items: state,
+  items: state.shoes,
 });
 
 export default connect(mapStateToProps)(ItemsList);
