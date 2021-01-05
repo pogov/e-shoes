@@ -1,52 +1,36 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import styles from "./DropdownMenu.module.scss";
+import React, { useRef, useState } from "react";
 import { DropdownProps } from "../../interfaces/DropdownProps";
+import styles from "./DropdownMenu.module.scss";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [dynamicHeader, setDynamicHeader] = useState(header);
 
-  const handleClick = (event: any) => {
+  const handleClick = (event: any, chosen: any) => {
     handler(event);
     setIsVisible(false);
+    setDynamicHeader(chosen);
   };
 
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const doesCurrentContainsTarget = (ref: HTMLElement, target: any) => {
-    if (ref.contains(target)) return true;
-    return false;
-  };
+  const current = dropdownRef.current;
 
-  const clickOutside = useCallback((e: MouseEvent) => {
-    const current = dropdownRef.current;
-    const target = e.target ? e.target : "";
-
-    if (!current || doesCurrentContainsTarget(current, target)) return null;
-
-    setIsVisible(false);
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", clickOutside);
-    return () => document.removeEventListener("mousedown", clickOutside);
-  }, [clickOutside]);
+  useClickOutside(current!, setIsVisible);
 
   return (
     <div ref={dropdownRef} className={styles.menu}>
-      <div
-        data-testid="header"
-        className={styles.header}
-        onClick={() => setIsVisible(!isVisible)}>
-        <p>{header}</p>
+      <div className={styles.header} onClick={() => setIsVisible(!isVisible)}>
+        <p>{dynamicHeader}</p>
       </div>
       {isVisible && (
-        <div data-testid="optionsList" className={styles.list}>
+        <div className={styles.list}>
           {list.map((item: any) => (
             <div
               key={item}
               className={styles.listItem}
-              onClick={handleClick}
-              data-testid="listItem">
+              onClick={(event) => handleClick(event, item)}>
               <p>{item}</p>
             </div>
           ))}

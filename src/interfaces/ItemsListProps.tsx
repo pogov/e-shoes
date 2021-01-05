@@ -7,4 +7,5 @@ export interface ItemsListProps {
   sizes: number[];
   tags: string[];
   imgSrc: string;
+  quantity?: number;
 }

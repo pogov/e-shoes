@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./ItemCard.module.scss";
 import { Link } from "react-router-dom";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
+import styles from "./ItemCard.module.scss";
 
 const ItemCard: React.FC<ItemsListProps> = (item) => {
   return (

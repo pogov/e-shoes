@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ItemsListProps } from "../interfaces/ItemsListProps";
-import { connect } from "react-redux";
-import ItemDetails from "../components/itemDetails/ItemDetails";
+import ItemDetails from "../containers/itemDetails/ItemDetails";
 
 interface ParamType {
   id: string;
@@ -47,7 +47,7 @@ const ItemDetailsTemplate: React.FC = ({ shoe }: any) => {
 };
 
 const mapStateToProps = (state: any, ownProps: any) => {
-  const shoe = state.shoes.find(
+  const shoe = state.shoes.shoes.find(
     (item: ItemsListProps) => item._id === ownProps.match.params.id,
   );
   return {

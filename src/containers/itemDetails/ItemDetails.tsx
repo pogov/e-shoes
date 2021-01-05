@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./ItemDetails.module.scss";
-import DropdownMenu from "../dropDown/DropdownMenu";
-import { ItemsListProps } from "../../interfaces/ItemsListProps";
 import { connect } from "react-redux";
-import { addToCart } from "../../actions/cartActions";
-
-type ItemDetailsProps = {
-  item: ItemsListProps;
-  chosenSize: number;
-  handleClick: (e: MouseEvent) => void;
-  addItemToCart: (i: string, s: number, p: number) => void;
-};
+import { ItemDetailsProps } from "../../interfaces/ItemDetailsProps";
+import { addToCart } from "../../redux/actions/cartActions";
+import DropdownMenu from "../../components/dropDown/DropdownMenu";
+import styles from "./ItemDetails.module.scss";
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
   item,
@@ -29,10 +22,10 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
 
   const handleAddItem = () => {
     if (!isChosenSize) {
-      setError("Please chose your size");
+      setError("Please choose your size");
       return;
     }
-    addItemToCart(_id, chosenSize, price);
+    addItemToCart(_id, chosenSize, price, name, imgSrc);
     setError("");
   };
 
@@ -60,7 +53,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <p>{price} PLN</p>
           </div>
           <div className={styles.btnContainer}>
-            {isChosenSize && <p>your size: {chosenSize}</p>}
+            {/* {isChosenSize && <p>your size: {chosenSize}</p>} */}
             <DropdownMenu
               list={sizes}
               header="choose size"
@@ -96,8 +89,13 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addItemToCart: (id: string, size: number, price: number) =>
-    dispatch(addToCart(id, size, price)),
+  addItemToCart: (
+    id: string,
+    size: number,
+    price: number,
+    name: string,
+    imgSrc: string,
+  ) => dispatch(addToCart(id, size, price, name, imgSrc)),
 });
 
 export default connect(null, mapDispatchToProps)(ItemDetails);

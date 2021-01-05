@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
+import { getItems } from "../redux/actions/shoesActions";
+import ItemsList from "../containers/itemsList/ItemsList";
 import styles from "./Main.module.scss";
-import ItemsList from "../components/itemsList/ItemsList";
-import { getItems } from "../actions/shoesActions";
 
-const Main: React.FC = ({ getItems, next, previous }: any) => {
-  const [isMore, setIsMore] = useState(true);
+const Main: React.FC = ({ getItems, next, loading }: any) => {
+  //
+  const handleClick = useCallback(
+    (next: any) => {
+      if (!next) return;
+      getItems(next.page, next.limit);
+    },
+    [getItems],
+  );
 
-  const handleClick = (next: any, prev: any) => {
-    if (!next) return;
-    getItems(next.page, next.limit);
-  };
-
-  useEffect(() => {
-    if (!next) setIsMore(false);
-  }, [next]);
+  const showButton = next && !loading;
 
   return (
     <main className={styles.wrapper}>
       <ItemsList />
-      {isMore && (
-        <button
-          onClick={() => handleClick(next, previous)}
-          className={styles.moreBtn}>
+      {showButton && (
+        <button onClick={() => handleClick(next)} className={styles.moreBtn}>
           load more
         </button>
       )}
@@ -31,8 +29,10 @@ const Main: React.FC = ({ getItems, next, previous }: any) => {
 };
 
 const mapStateToProps = (state: any) => {
-  const { next, previous } = state;
-  return { next, previous };
+  const {
+    shoes: { next, loading },
+  } = state;
+  return { next, loading };
 };
 
 const mapDispatchToProps = (dispatch: any) => {

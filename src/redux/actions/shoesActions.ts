@@ -1,9 +1,9 @@
-import { ItemsListProps } from "../interfaces/ItemsListProps";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 export enum ActionTypes {
   GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST",
   GET_ITEMS_SUCCES = "GET_ITEMS_SUCCES",
-  GET_ONE_ITEM = "GET_ONE_ITEM",
+  GET_ITEMS_FAILURE = "GET_ITEMS_FAILURE",
 }
 
 type DispatchProp = {
@@ -20,9 +20,8 @@ export const getItems = (page: number, limit: number) => (
     .then((res) => res.json())
     .then((result) => {
       dispatch({ type: ActionTypes.GET_ITEMS_SUCCES, payload: result });
+    })
+    .catch((err) => {
+      dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: err });
     });
-};
-
-export const getOneItem = (id: string) => {
-  return { type: ActionTypes.GET_ONE_ITEM, payload: id };
 };

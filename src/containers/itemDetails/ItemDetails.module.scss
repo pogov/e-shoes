@@ -16,7 +16,11 @@
     font-weight: 300;
     background-color: black;
     text-align: center;
+    transition: all .2s ease;
     // add hover states
+    &:hover{
+        opacity: .6;
+    }
 }
 .wrapper{
     padding-top: 3em;
