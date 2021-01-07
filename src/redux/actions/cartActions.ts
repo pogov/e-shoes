@@ -1,6 +1,7 @@
 export enum CartActionTypes {
   ADD_TO_CART = "ADD_TO_CART",
   CLEAR_CART = "CLEAR_CART",
+  DELETE_ITEM = "DELETE_ITEM",
   INCREASE_QUANTITY = "INCREASE_QUANTITY",
   DECREASE_QUANTITY = "DECREASE_QUANTITY",
 }
@@ -22,6 +23,13 @@ export const addToCart = (
 export const clearCart = () => {
   return {
     type: CartActionTypes.CLEAR_CART,
+  };
+};
+
+export const deleteItem = (_id: string) => {
+  return {
+    type: CartActionTypes.DELETE_ITEM,
+    payload: { _id },
   };
 };
 
