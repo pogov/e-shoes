@@ -1,25 +1,24 @@
-import LoginPage from "./LoginPage";
+// import LoginPage from "./LoginPage";
 import UserDetailsPage from "./UserDetailsPage";
-import Payment from "./Payment";
+import Payment from "../../containers/multistepForm/Payment";
 import ConfirmationPage from "./ConfirmationPage";
-import { FormikErrors, FormikTouched, FormikValues } from "formik";
-// import * as Yup from "yup";
+import { FormikValues } from "formik";
+import { PaymentIntent } from "@stripe/stripe-js";
 
 export const renderStep = (
   step: number,
   values: FormikValues,
-  errors: FormikErrors<typeof values>,
-  touched: FormikTouched<typeof values>,
+  status: PaymentIntent.Status,
 ) => {
   switch (step) {
+    // case 1:
+    //   return <LoginPage />;
     case 1:
-      return <LoginPage errors={errors} />;
+      return <UserDetailsPage />;
     case 2:
-      return <UserDetailsPage errors={errors} />;
-    case 3:
       return <Payment />;
-    case 4:
-      return <ConfirmationPage values={values} />;
+    case 3:
+      return <ConfirmationPage values={values} status={status} />;
     default:
       return null;
   }
@@ -68,7 +67,13 @@ export const validateAddress = (value: string) => {
 
 export const validatePhoneNumber = (value: number) => {
   let error = "";
-  if (!value.toString().match(/\d{9}/gi)) {
+  if (
+    !value
+      .toString()
+      .match(
+        /^\+\d{2}\s\d{3}\s\d{3}\s\d{3}|^\+\d{2}\d{9}|\d{9}|\d{3}\s\d{3}\s\d{3}/,
+      )
+  ) {
     error = "Invalid phone number";
   }
   return error;

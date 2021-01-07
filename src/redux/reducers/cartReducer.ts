@@ -37,7 +37,6 @@ export const cart = (state: Initial = initialState, action: any) => {
       };
 
     case CartActionTypes.INCREASE_QUANTITY:
-      // ten reducer działa niepoprawnie
       const [itemToIncrease] = state.cartItems.filter(
         (item) => item._id === payload._id,
       );
