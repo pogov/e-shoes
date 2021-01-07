@@ -41,9 +41,11 @@ export const cart = (state: Initial = initialState, action: any) => {
         (item) => item._id === payload._id,
       );
 
-      const calculatedTotal = state.total - itemToDelete.price;
+      if (!itemToDelete.quantity) return;
+      const calculatedTotal =
+        state.total - itemToDelete.price * itemToDelete.quantity;
       return {
-        itemCount: state.itemCount - 1,
+        itemCount: state.itemCount - itemToDelete.quantity,
         total: calculatedTotal,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
