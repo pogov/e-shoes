@@ -5,8 +5,10 @@ import {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
+  deleteItem,
 } from "../../redux/actions/cartActions";
 import styles from "./CartModal.module.scss";
+import CartDetails from "../../components/cartDetails/CartDetails";
 
 type CartModalProps = {
   items: any;
@@ -15,7 +17,7 @@ type CartModalProps = {
   handler: any;
   increase: any;
   decrease: any;
-  // open: boolean;
+  deleteItem: any;
 };
 
 const CartModal: React.FC<CartModalProps> = ({
@@ -25,7 +27,7 @@ const CartModal: React.FC<CartModalProps> = ({
   handler,
   increase,
   decrease,
-  // open,
+  deleteItem,
 }) => {
   const ConditionalLink = () => {
     if (total > 0) {
@@ -45,11 +47,6 @@ const CartModal: React.FC<CartModalProps> = ({
     );
   };
 
-  const handleClear = () => {
-    clear();
-    // handler(false);
-  };
-
   const cartIsEmpty = items.length === 0;
 
   return (
@@ -59,25 +56,20 @@ const CartModal: React.FC<CartModalProps> = ({
           <div className={styles.list}>
             {items &&
               items.map((item: any) => (
-                <div
+                <CartDetails
                   key={`${item._id}${item.size}`}
-                  className={styles.listItem}>
-                  <img src={item.imgSrc} alt="" />
-                  <h4>{item.name}</h4>
-                  <p>{item.size}</p>
-                  <div className={styles.qBtns}>
-                    <button onClick={() => increase(item._id)}>v</button>
-                    <button onClick={() => decrease(item._id)}>v</button>
-                  </div>
-                  <p>{item.quantity}</p>
-                  <h4>{item.price}</h4>
-                </div>
+                  item={item}
+                  increase={increase}
+                  decrease={decrease}
+                  deleteItem={deleteItem}
+                  cart={true}
+                />
               ))}
           </div>
           <div className={styles.total}>
             <h3>Total: {total.toFixed(2)}</h3>
           </div>
-          <button onClick={handleClear} className={styles.checkoutBtn}>
+          <button onClick={() => clear()} className={styles.checkoutBtn}>
             clear cart
           </button>
           <ConditionalLink />
@@ -85,11 +77,6 @@ const CartModal: React.FC<CartModalProps> = ({
       ) : (
         <h4>Your cart is empty</h4>
       )}
-      <button
-        className={styles.checkoutBtn_text}
-        onClick={() => handler(false)}>
-        close
-      </button>
     </div>
   );
 };
@@ -107,6 +94,7 @@ const mapDispatchToProps = (dispatch: any) => {
     clear: () => dispatch(clearCart()),
     increase: (id: string) => dispatch(increaseQuantity(id)),
     decrease: (id: string) => dispatch(decreaseQuantity(id)),
+    deleteItem: (id: string) => dispatch(deleteItem(id)),
   };
 };
 

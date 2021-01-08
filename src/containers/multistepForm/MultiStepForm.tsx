@@ -41,7 +41,8 @@ const MultipageForm: React.FC<Props> = ({ total, clear }) => {
   };
 
   const handleSubmit = async (values: FormikValues) => {
-    const amount = total * 100;
+    const totalFixed = Number(total.toFixed(2));
+    const amount = totalFixed * 100;
 
     const bilingDetails = {
       name: values.fullname,
@@ -64,7 +65,6 @@ const MultipageForm: React.FC<Props> = ({ total, clear }) => {
 
     if (error) {
       console.log(error);
-      return;
     }
 
     if (!paymentMethod) return;

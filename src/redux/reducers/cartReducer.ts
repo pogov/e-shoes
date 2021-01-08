@@ -36,53 +36,66 @@ export const cart = (state: Initial = initialState, action: any) => {
         total: 0,
       };
 
+    case CartActionTypes.DELETE_ITEM:
+      const [itemToDelete] = state.cartItems.filter(
+        (item) => item._id === payload._id,
+      );
+
+      if (!itemToDelete.quantity) return;
+      const calculatedTotal =
+        state.total - itemToDelete.price * itemToDelete.quantity;
+      return {
+        itemCount: state.itemCount - itemToDelete.quantity,
+        total: calculatedTotal,
+        cartItems: [
+          ...state.cartItems.filter((item) => item._id !== payload._id),
+        ],
+      };
+
     case CartActionTypes.INCREASE_QUANTITY:
       const [itemToIncrease] = state.cartItems.filter(
         (item) => item._id === payload._id,
       );
-      if (itemToIncrease) {
-        itemToIncrease.quantity = itemToIncrease.quantity! + 1;
+      if (!itemToIncrease) return;
+      const itemToIncreaseCopy = { ...itemToIncrease };
+      if (itemToIncreaseCopy.quantity) {
+        itemToIncreaseCopy.quantity = itemToIncreaseCopy.quantity + 1;
       }
+
       const increasedTotal = state.total + itemToIncrease.price;
       return {
         itemCount: state.itemCount + 1,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
-          itemToIncrease,
+          itemToIncreaseCopy,
         ],
         total: increasedTotal,
       };
 
     case CartActionTypes.DECREASE_QUANTITY:
-      if (state.itemCount === 1) {
-        return {
-          cartItems: [],
-          itemCount: 0,
-          total: 0,
-        };
-      }
       const [itemToDecrease] = state.cartItems.filter(
         (item) => item._id === payload._id,
       );
       const decreasedTotal = state.total - itemToDecrease.price;
 
-      if (itemToDecrease.quantity === 1) {
+      if (!itemToDecrease) return;
+      const itemToDecreaseCopy = { ...itemToDecrease };
+      if (itemToDecreaseCopy.quantity === 1) {
         return {
-          itemCount: state.itemCount - 1,
-          total: decreasedTotal,
-          cartItems: [
-            ...state.cartItems.filter((item) => item._id !== payload._id),
-          ],
+          itemCount: state.itemCount,
+          total: state.total,
+          cartItems: state.cartItems,
         };
       }
-      if (itemToDecrease) {
-        itemToDecrease.quantity = itemToDecrease.quantity! - 1;
+
+      if (itemToDecreaseCopy.quantity) {
+        itemToDecreaseCopy.quantity = itemToDecreaseCopy.quantity - 1;
       }
       return {
         itemCount: state.itemCount - 1,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
-          itemToDecrease,
+          itemToDecreaseCopy,
         ],
         total: decreasedTotal,
       };
