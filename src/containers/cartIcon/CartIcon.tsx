@@ -10,14 +10,14 @@ type State = {
 };
 
 const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [triggerAnimation, setTriggerAnimationTo] = useState(false);
   const itemNumberElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (itemNumberElement.current) {
-      setIsActive(true);
+      setTriggerAnimationTo(true);
       const node = itemNumberElement.current;
-      const handler = () => setIsActive(false);
+      const handler = () => setTriggerAnimationTo(false);
       node.addEventListener("animationend", handler);
       return () => node.removeEventListener("animationend", handler);
     }
@@ -31,7 +31,9 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
       {isItem && (
         <div
           ref={itemNumberElement}
-          className={isActive ? styles.itemNumberActive : styles.itemNumber}>
+          className={
+            triggerAnimation ? styles.itemNumberActive : styles.itemNumber
+          }>
           {itemCount}
         </div>
       )}
