@@ -1,7 +1,13 @@
+@import '../containers/itemDetails/ItemDetails.module.scss';
 .cart{
     padding: 3em 4em;
     min-height: 60vh;
-    // display: grid;
-    // grid-template-columns: repeat(2, 1fr);
+    text-align: center;
 
+    .backBtn{
+        @include btn-reset;
+        @include btn-style;
+        color: rgba(0, 0, 0, 0.392);
+        background-color: rgba(240, 240, 240, 0.6);
+    }
 }

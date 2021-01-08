@@ -1,18 +1,16 @@
 import React from "react";
-import { Field, ErrorMessage, FormikValues, FormikErrors } from "formik";
+import { Field, ErrorMessage } from "formik";
 import styles from "./LoginPage.module.scss";
 import ErrorText from "./ErrorText";
 import {
   validateFullname,
   validateAddress,
   validatePhoneNumber,
+  validateEmail,
+  validateUser,
 } from "./formHelpers";
 
-interface Props {
-  errors: FormikErrors<FormikValues>;
-}
-
-const UserDetailsPage: React.FC<Props> = ({ errors }) => {
+const UserDetailsPage: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner_wrapper}>
@@ -48,6 +46,35 @@ const UserDetailsPage: React.FC<Props> = ({ errors }) => {
             validate={validatePhoneNumber}
           />
           <ErrorMessage name="phone" component={ErrorText} />
+        </div>
+        <div className={styles.formField}>
+          <label htmlFor="username">username</label>
+          <Field
+            // autoComplete="off"
+            type="text"
+            name="username"
+            label="username"
+            validate={validateUser}
+          />
+          <ErrorMessage name="username" component={ErrorText} />
+        </div>
+        <div className={styles.formField}>
+          <label htmlFor="email">email</label>
+          <Field
+            // autoComplete="off"
+            type="email"
+            name="email"
+            label="email"
+            validate={validateEmail}
+          />
+          <ErrorMessage name="email" component={ErrorText} />
+        </div>
+        <div className={styles.formField_row}>
+          <div className={styles.checkbox_container}>
+            <Field type="checkbox" name="isUser" label="isUser" id="isUser" />
+            <span className={styles.custom}></span>
+          </div>
+          <label htmlFor="isUser">Are you already our customer</label>
         </div>
       </div>
     </div>
