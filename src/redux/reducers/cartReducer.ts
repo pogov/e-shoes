@@ -44,9 +44,10 @@ export const cart = (state: Initial = initialState, action: any) => {
       if (!itemToDelete.quantity) return;
       const calculatedTotal =
         state.total - itemToDelete.price * itemToDelete.quantity;
+      const fixedCalculatedTotal = Number(calculatedTotal.toFixed(2));
       return {
         itemCount: state.itemCount - itemToDelete.quantity,
-        total: calculatedTotal,
+        total: fixedCalculatedTotal,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
         ],
@@ -63,13 +64,14 @@ export const cart = (state: Initial = initialState, action: any) => {
       }
 
       const increasedTotal = state.total + itemToIncrease.price;
+      const fixedIncreasedTotal = Number(increasedTotal.toFixed(2));
       return {
         itemCount: state.itemCount + 1,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
           itemToIncreaseCopy,
         ],
-        total: increasedTotal,
+        total: fixedIncreasedTotal,
       };
 
     case CartActionTypes.DECREASE_QUANTITY:
@@ -77,27 +79,21 @@ export const cart = (state: Initial = initialState, action: any) => {
         (item) => item._id === payload._id,
       );
       const decreasedTotal = state.total - itemToDecrease.price;
+      const fixedDecreasedTotal = Number(decreasedTotal.toFixed(2));
 
-      if (!itemToDecrease) return;
       const itemToDecreaseCopy = { ...itemToDecrease };
-      if (itemToDecreaseCopy.quantity === 1) {
-        return {
-          itemCount: state.itemCount,
-          total: state.total,
-          cartItems: state.cartItems,
-        };
-      }
 
-      if (itemToDecreaseCopy.quantity) {
+      if (itemToDecreaseCopy.quantity && itemToDecreaseCopy.quantity > 1) {
         itemToDecreaseCopy.quantity = itemToDecreaseCopy.quantity - 1;
       }
+
       return {
         itemCount: state.itemCount - 1,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== payload._id),
           itemToDecreaseCopy,
         ],
-        total: decreasedTotal,
+        total: fixedDecreasedTotal,
       };
 
     default:
