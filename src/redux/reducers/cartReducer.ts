@@ -79,13 +79,13 @@ export const cart = (state: Initial = initialState, action: any) => {
         (item) => item._id === payload._id,
       );
       const decreasedTotal = state.total - itemToDecrease.price;
-      const fixedDecreasedTotal = Number(decreasedTotal.toFixed(2));
 
       const itemToDecreaseCopy = { ...itemToDecrease };
 
-      if (itemToDecreaseCopy.quantity && itemToDecreaseCopy.quantity > 1) {
-        itemToDecreaseCopy.quantity = itemToDecreaseCopy.quantity - 1;
-      }
+      if (itemToDecreaseCopy.quantity === 1) return state;
+      const fixedDecreasedTotal = Number(decreasedTotal.toFixed(2));
+      itemToDecreaseCopy.quantity =
+        itemToDecreaseCopy.quantity && itemToDecreaseCopy.quantity - 1;
 
       return {
         itemCount: state.itemCount - 1,

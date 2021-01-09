@@ -67,7 +67,7 @@ const CartModal: React.FC<CartModalProps> = ({
               ))}
           </div>
           <div className={styles.total}>
-            <h3>Total: {total.toFixed(2)}</h3>
+            <h3>Total: {total}</h3>
           </div>
           <button onClick={() => clear()} className={styles.checkoutBtn}>
             clear cart
