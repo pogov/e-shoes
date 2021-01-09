@@ -32,7 +32,9 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
       </div>
       <div className={styles.stripeContainer}>
         <CardElement />
-        <button onClick={() => submit(values)}>pay {total}</button>
+        <button onClick={() => submit(values)} className={styles.backBtn}>
+          pay {total}
+        </button>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+@import '../../containers/itemDetails/ItemDetails.module.scss';
 .grid{
     margin-top: 4em;
     display: grid;
@@ -8,7 +9,15 @@
     }
 
     .stripeContainer{
-        padding: 1em;
+        padding: 4em;
         box-shadow: -15px 0 10px -10px rgba(0,0,0,0.1);
+
+        .backBtn{
+            margin-top: 2em;
+            @include btn-reset;
+            @include btn-style;
+            color: white;
+            background-color: black;
+        }
     }
 }
