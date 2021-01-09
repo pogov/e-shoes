@@ -9,6 +9,7 @@ export const renderStep = (
   step: number,
   values: FormikValues,
   status: PaymentIntent.Status,
+  handleSubmit: (values: FormikValues) => Promise<void>,
 ) => {
   switch (step) {
     // case 1:
@@ -16,7 +17,7 @@ export const renderStep = (
     case 1:
       return <UserDetailsPage />;
     case 2:
-      return <Payment />;
+      return <Payment submit={handleSubmit} values={values} />;
     case 3:
       return <ConfirmationPage values={values} status={status} />;
     default:

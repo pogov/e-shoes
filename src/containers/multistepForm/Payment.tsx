@@ -3,13 +3,16 @@ import styles from "./Payment.module.scss";
 import { connect } from "react-redux";
 import CartDetails from "../../components/cartDetails/CartDetails";
 import { CardElement } from "@stripe/react-stripe-js";
+import { FormikValues } from "formik";
 
 interface Props {
   items: any;
   total: number;
+  submit: (values: FormikValues) => Promise<void>;
+  values: FormikValues;
 }
 
-const Payment: React.FC<Props> = ({ items, total }) => {
+const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
   return (
     <div className={styles.grid}>
       <div className={styles.cartReview}>
@@ -29,6 +32,7 @@ const Payment: React.FC<Props> = ({ items, total }) => {
       </div>
       <div className={styles.stripeContainer}>
         <CardElement />
+        <button onClick={() => submit(values)}>pay {total}</button>
       </div>
     </div>
   );

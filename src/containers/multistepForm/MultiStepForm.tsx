@@ -101,19 +101,18 @@ const MultipageForm: React.FC<Props> = ({ total, clear }) => {
           phone: "",
           isUser: false,
         }}
-        onSubmit={(values) => {
+        onSubmit={() => {
           if (step < 2) handleNextStep();
-          if (step === 2) handleSubmit(values);
         }}>
         {({ values, errors }) => (
           <Form>
-            {renderStep(step, values, status)}
-            {step > 1 && (
+            {renderStep(step, values, status, handleSubmit)}
+            {step > 1 && total !== 0 && (
               <button type="button" onClick={handleBackStep}>
                 back
               </button>
             )}
-            {step <= 2 && (
+            {step < 2 && (
               <button
                 type="submit"
                 disabled={isDisabled(errors) || isProcessing}>
