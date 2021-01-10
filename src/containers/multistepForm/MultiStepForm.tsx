@@ -5,7 +5,7 @@ import StepIndicator from "../../components/multistepform/StepIndicator";
 import styles from "./MultiStepForm.module.scss";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { connect } from "react-redux";
-import { clearCart } from "../../redux/actions/cartActions";
+import { clearCart, setShippingValue } from "../../redux/actions/cartActions";
 import { PaymentIntent } from "@stripe/stripe-js";
 
 const getClientSecretKey = async (amount: number) => {
@@ -22,9 +22,10 @@ const getClientSecretKey = async (amount: number) => {
 interface Props {
   total: number;
   clear: any;
+  setShipping: any;
 }
 
-const MultipageForm: React.FC<Props> = ({ total, clear }) => {
+const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
   const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<PaymentIntent.Status>("processing");
@@ -100,13 +101,15 @@ const MultipageForm: React.FC<Props> = ({ total, clear }) => {
           address: "",
           phone: "",
           isUser: false,
+          shipping: "14,00",
         }}
-        onSubmit={() => {
+        onSubmit={(values) => {
+          setShipping(values.shipping);
           if (step < 2) handleNextStep();
         }}>
         {({ values, errors }) => (
           <Form>
-            {renderStep(step, values, status, handleSubmit)}
+            {renderStep(step, values, status, handleSubmit, values.shipping)}
             {step > 1 && total !== 0 && (
               <button type="button" onClick={handleBackStep}>
                 back
@@ -136,6 +139,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     clear: () => dispatch(clearCart()),
+    setShipping: (shippingValue: string) =>
+      dispatch(setShippingValue(shippingValue)),
   };
 };
 

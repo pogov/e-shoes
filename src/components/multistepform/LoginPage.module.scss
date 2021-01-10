@@ -1,31 +1,56 @@
 .wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    margin: 2em auto;
 
     .inner_wrapper{
-
-
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        border: 1px solid rgba(100, 100, 100, 0.2);
+        padding: 1em;
 
         .formField{
-            margin: 1em;
+            margin: .5em;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
 
+            .errorWrapper{
+                min-height: 1em;
+            }
+
             label{
                 text-transform: capitalize;
                 margin-bottom: .5em;
+                cursor: pointer;
+            }
+
+            input{
+                width: calc(100% - 1em);
+                padding: .5em;
+                border: 1px solid rgba(100, 100, 100, 0.2);
+                outline: none;
+                background: white;
+                &:focus{
+                    border: 1px solid black;
+                }
+
+                &::placeholder{
+                    color:rgba(100, 100, 100, 0.4);
+                }
+
+                &:invalid{
+                    border: 1px solid red;
+                }
             }
 
             &_row{
                 @extend .formField;
                 flex-direction: row;
+                justify-content: flex-start;
             }
 
             .checkbox_container{
@@ -35,17 +60,17 @@
                 width: .8em;
                 position: relative;
                 border: 1px solid black;
-                border-radius: .2em;
                 background: transparent;
                 cursor: pointer;
 
                 .custom{
+                    display: block;
                     position: absolute;
-                    top: 0.1em;
-                    left: 0.125em;
-                    height: .6em;
-                    width: .6em;
-                    border-radius: .1em;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    height: .5em;
+                    width: .5em;
                 }
 
                 input:checked ~ .custom{

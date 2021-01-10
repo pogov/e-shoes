@@ -5,6 +5,7 @@ const initialState = {
   itemCount: 0,
   total: 0,
   cartItems: [],
+  shipping: 0,
 };
 
 export type Initial = {
@@ -94,6 +95,12 @@ export const cart = (state: Initial = initialState, action: any) => {
           itemToDecreaseCopy,
         ],
         total: fixedDecreasedTotal,
+      };
+
+    case CartActionTypes.SET_SHIPPING:
+      return {
+        ...state,
+        shipping: parseFloat(payload.shippingValue.replace(",", ".")),
       };
 
     default:

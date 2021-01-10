@@ -10,64 +10,79 @@ import {
   validateUser,
 } from "./formHelpers";
 
-const UserDetailsPage: React.FC = () => {
+interface Props {
+  shipping: string;
+}
+
+const UserDetailsPage: React.FC<Props> = ({ shipping }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner_wrapper}>
+        <h4>User details</h4>
         <div className={styles.formField}>
-          <label htmlFor="fullname">fullname</label>
           <Field
             autoComplete="off"
             type="text"
             name="fullname"
             label="fullname"
             validate={validateFullname}
+            placeholder="fullname"
           />
-          <ErrorMessage name="fullname" component={ErrorText} />
+          <div className={styles.errorWrapper}>
+            <ErrorMessage name="fullname" component={ErrorText} />
+          </div>
         </div>
         <div className={styles.formField}>
-          <label htmlFor="address">address</label>
           <Field
             autoComplete="off"
             type="text"
             name="address"
             label="address"
             validate={validateAddress}
+            placeholder="address"
           />
-          <ErrorMessage name="address" component={ErrorText} />
+          <div className={styles.errorWrapper}>
+            <ErrorMessage name="address" component={ErrorText} />
+          </div>
         </div>
         <div className={styles.formField}>
-          <label htmlFor="phone">phone number</label>
           <Field
             autoComplete="off"
             type="text"
             name="phone"
             label="phone"
             validate={validatePhoneNumber}
+            placeholder="phone number"
           />
-          <ErrorMessage name="phone" component={ErrorText} />
+          <div className={styles.errorWrapper}>
+            <ErrorMessage name="phone" component={ErrorText} />
+          </div>
         </div>
         <div className={styles.formField}>
-          <label htmlFor="username">username</label>
           <Field
-            // autoComplete="off"
+            autoComplete="off"
             type="text"
             name="username"
             label="username"
             validate={validateUser}
+            placeholder="username"
           />
-          <ErrorMessage name="username" component={ErrorText} />
+          <div className={styles.errorWrapper}>
+            <ErrorMessage name="username" component={ErrorText} />
+          </div>
         </div>
         <div className={styles.formField}>
-          <label htmlFor="email">email</label>
           <Field
-            // autoComplete="off"
+            autoComplete="off"
             type="email"
             name="email"
             label="email"
             validate={validateEmail}
+            placeholder="e-mail"
           />
-          <ErrorMessage name="email" component={ErrorText} />
+          <div className={styles.errorWrapper}>
+            <ErrorMessage name="email" component={ErrorText} />
+          </div>
         </div>
         <div className={styles.formField_row}>
           <div className={styles.checkbox_container}>
@@ -76,6 +91,36 @@ const UserDetailsPage: React.FC = () => {
           </div>
           <label htmlFor="isUser">Are you already our customer</label>
         </div>
+      </div>
+      <div className={styles.inner_wrapper}>
+        <h4>Shipping details</h4>
+        <div className={styles.formField_row}>
+          <div className={styles.checkbox_container}>
+            <Field
+              type="radio"
+              name="shipping"
+              label="shipping-one"
+              id="shipping-one"
+              value="14,00"
+            />
+            <span className={styles.custom}></span>
+          </div>
+          <label htmlFor="shipping-one">Shipping option 1: 14,00</label>
+        </div>
+        <div className={styles.formField_row}>
+          <div className={styles.checkbox_container}>
+            <Field
+              type="radio"
+              name="shipping"
+              label="shipping-two"
+              id="shipping-two"
+              value="8,99"
+            />
+            <span className={styles.custom}></span>
+          </div>
+          <label htmlFor="shipping-two">Shipping option 2: 8,99</label>
+        </div>
+        <h3>Shiping cost: {shipping}</h3>
       </div>
     </div>
   );

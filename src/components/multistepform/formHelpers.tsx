@@ -10,12 +10,13 @@ export const renderStep = (
   values: FormikValues,
   status: PaymentIntent.Status,
   handleSubmit: (values: FormikValues) => Promise<void>,
+  shipping: string,
 ) => {
   switch (step) {
     // case 1:
     //   return <LoginPage />;
     case 1:
-      return <UserDetailsPage />;
+      return <UserDetailsPage shipping={shipping} />;
     case 2:
       return <Payment submit={handleSubmit} values={values} />;
     case 3:
@@ -59,9 +60,9 @@ export const validateFullname = (value: string) => {
 export const validateAddress = (value: string) => {
   let error = "";
   if (value.length === 0) {
-    error = "Fullname is required";
+    error = "Address is required";
   } else {
-    if (value.length < 10) error = "Address is invalid";
+    if (!value.match(/\w\d/gi)) error = "Address is invalid";
   }
   return error;
 };

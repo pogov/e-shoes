@@ -4,6 +4,7 @@ export enum CartActionTypes {
   DELETE_ITEM = "DELETE_ITEM",
   INCREASE_QUANTITY = "INCREASE_QUANTITY",
   DECREASE_QUANTITY = "DECREASE_QUANTITY",
+  SET_SHIPPING = "SET_SHIPPING",
 }
 
 export const addToCart = (
@@ -41,4 +42,9 @@ export const increaseQuantity = (_id: string) => ({
 export const decreaseQuantity = (_id: string) => ({
   type: CartActionTypes.DECREASE_QUANTITY,
   payload: { _id },
+});
+
+export const setShippingValue = (shippingValue: string) => ({
+  type: CartActionTypes.SET_SHIPPING,
+  payload: { shippingValue },
 });

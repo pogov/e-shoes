@@ -13,6 +13,7 @@ interface Props {
 }
 
 const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
+  const shippingFixed = parseFloat(values.shipping.replace(",", "."));
   return (
     <div className={styles.grid}>
       <div className={styles.cartReview}>
@@ -26,12 +27,30 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
               />
             ))}
         </div>
+        <div>
+          <h4>Shipping: {values.shipping}</h4>
+        </div>
         <div className={styles.total}>
-          <h3>Total: {total.toFixed(2)}</h3>
+          <h3>Total: {total + shippingFixed}</h3>
         </div>
       </div>
       <div className={styles.stripeContainer}>
-        <CardElement />
+        <CardElement
+        // options={{
+        //   style: {
+        //     base: {
+        //       fontSize: "16px",
+        //       color: "black",
+        //       "::placeholder": {
+        //         color: "#aab7c4",
+        //       },
+        //     },
+        //     invalid: {
+        //       color: "#9e2146",
+        //     },
+        //   },
+        // }}
+        />
         <button onClick={() => submit(values)} className={styles.backBtn}>
           pay {total}
         </button>
