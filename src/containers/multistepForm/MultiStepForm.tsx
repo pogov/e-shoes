@@ -37,12 +37,12 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
     setStep((prevStep) => prevStep - 1);
   };
   const handleNextStep = () => {
-    if (step > 2) return;
     setStep((prevStep) => prevStep + 1);
   };
 
   const handleSubmit = async (values: FormikValues) => {
-    const totalFixed = Number(total.toFixed(2));
+    const totalFixed =
+      Number(total.toFixed(2)) + parseFloat(values.shipping.replace(",", "."));
     const amount = totalFixed * 100;
 
     const bilingDetails = {
@@ -104,8 +104,10 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
           shipping: "14,00",
         }}
         onSubmit={(values) => {
-          setShipping(values.shipping);
-          if (step < 2) handleNextStep();
+          if (step < 2) {
+            handleNextStep();
+            setShipping(values.shipping);
+          }
         }}>
         {({ values, errors }) => (
           <Form>
@@ -119,7 +121,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
               <button
                 type="submit"
                 disabled={isDisabled(errors) || isProcessing}>
-                {step === 2 ? "submit" : "next"}
+                next
               </button>
             )}
           </Form>

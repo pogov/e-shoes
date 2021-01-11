@@ -7,11 +7,17 @@
     cursor: pointer;
 }
 
+.price{
+    justify-self: end;
+    grid-column: 4 / 5;
+}
+
 .listItem{
     min-width: 100%;
     max-width: 100%;
     display: grid;
-    grid-template-columns: 6em minmax(8em, 1fr) 1.5em 3em;
+    grid-template-columns: 6em minmax(7em, 1fr) 2em 3em;
+    grid-template-rows: 1fr;
     align-items: flex-start;
     justify-content: flex-start;
     padding-top: .5em;
@@ -43,8 +49,8 @@
         }
 
         svg{
-            transform: scale(1.2);
-            margin-bottom: 1.1em;
+            transform: scale(.8);
+            // margin-bottom: 1.1em;
         }
         
         .qBtns{

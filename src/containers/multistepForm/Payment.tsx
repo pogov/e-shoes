@@ -14,10 +14,11 @@ interface Props {
 
 const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
   const shippingFixed = parseFloat(values.shipping.replace(",", "."));
+  const totalToPay = total + shippingFixed;
   return (
     <div className={styles.grid}>
       <div className={styles.cartReview}>
-        <div className={styles.list}>
+        <div>
           {items &&
             items.map((item: any) => (
               <CartDetails
@@ -27,32 +28,20 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
               />
             ))}
         </div>
-        <div>
+        <div className={styles.shipping}>
           <h4>Shipping: {values.shipping}</h4>
         </div>
         <div className={styles.total}>
-          <h3>Total: {total + shippingFixed}</h3>
+          <h3>Total: {totalToPay}</h3>
         </div>
       </div>
       <div className={styles.stripeContainer}>
-        <CardElement
-        // options={{
-        //   style: {
-        //     base: {
-        //       fontSize: "16px",
-        //       color: "black",
-        //       "::placeholder": {
-        //         color: "#aab7c4",
-        //       },
-        //     },
-        //     invalid: {
-        //       color: "#9e2146",
-        //     },
-        //   },
-        // }}
-        />
-        <button onClick={() => submit(values)} className={styles.backBtn}>
-          pay {total}
+        <CardElement />
+        <button
+          type="button"
+          onClick={() => submit(values)}
+          className={styles.backBtn}>
+          pay {totalToPay}
         </button>
       </div>
     </div>

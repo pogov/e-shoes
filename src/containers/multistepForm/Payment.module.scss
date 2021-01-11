@@ -6,6 +6,10 @@
 
     .cartReview{
         padding: 1em;
+
+        .shipping, .total{
+            text-align: end;
+        }
     }
 
     .stripeContainer{

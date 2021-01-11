@@ -24,10 +24,13 @@ export const cart = (state: Initial = initialState, action: any) => {
         state.cartItems.filter((item) => item._id === payload._id).length > 0;
       if (ifCartAlreadyContains) return state;
 
+      const newTotal = state.total + payload.price;
+      const newTotalFixed = Number(newTotal.toFixed(2));
+
       return {
         cartItems: [...state.cartItems, { ...payload }],
         itemCount: state.itemCount + 1,
-        total: (state.total += payload.price),
+        total: newTotalFixed,
       };
 
     case CartActionTypes.CLEAR_CART:
