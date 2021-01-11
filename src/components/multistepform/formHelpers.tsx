@@ -2,12 +2,10 @@ import UserDetailsPage from "./UserDetailsPage";
 import Payment from "../../containers/multistepForm/Payment";
 import ConfirmationPage from "./ConfirmationPage";
 import { FormikValues } from "formik";
-import { PaymentIntent } from "@stripe/stripe-js";
 
 export const renderStep = (
   step: number,
   values: FormikValues,
-  status: PaymentIntent.Status,
   handleSubmit: (values: FormikValues) => Promise<void>,
   shipping: string,
 ) => {
@@ -17,7 +15,7 @@ export const renderStep = (
     case 2:
       return <Payment submit={handleSubmit} values={values} />;
     case 3:
-      return <ConfirmationPage values={values} status={status} />;
+      return <ConfirmationPage values={values} />;
     default:
       return null;
   }

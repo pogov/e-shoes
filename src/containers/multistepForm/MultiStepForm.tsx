@@ -6,7 +6,7 @@ import styles from "./MultiStepForm.module.scss";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { connect } from "react-redux";
 import { clearCart, setShippingValue } from "../../redux/actions/cartActions";
-import { PaymentIntent } from "@stripe/stripe-js";
+import { StripeError } from "@stripe/stripe-js";
 
 const getClientSecretKey = async (amount: number) => {
   const data = await fetch("http://localhost:5500/payment-intent", {
@@ -34,7 +34,7 @@ const MultipageForm: React.FC<Props> = ({
 }) => {
   const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [status, setStatus] = useState<PaymentIntent.Status>("processing");
+  const [paymentError, setPaymentError] = useState<StripeError>();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -84,10 +84,11 @@ const MultipageForm: React.FC<Props> = ({
 
     if (result.error) {
       console.log(result.error);
+      setIsProcessing(false);
+      setPaymentError(result.error);
     }
 
     if (!result.paymentIntent) return;
-    setStatus(result.paymentIntent.status);
     setIsProcessing(false);
     setStep(3);
     clear();
@@ -121,8 +122,14 @@ const MultipageForm: React.FC<Props> = ({
         }}>
         {({ values, errors }) => (
           <Form>
-            {renderStep(step, values, status, handleSubmit, values.shipping)}
+            {renderStep(step, values, handleSubmit, values.shipping)}
             {isProcessing && <p>Processing payment...</p>}
+            {paymentError && !isProcessing && (
+              <div>
+                <p>{paymentError.message}</p>
+                <p>{paymentError.decline_code}</p>
+              </div>
+            )}
             {step > 1 && total !== 0 && (
               <button
                 className={styles.formBtn_back}
