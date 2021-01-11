@@ -24,7 +24,10 @@ const ConfirmationPage: React.FC<Props> = ({ values }) => {
           />
         ))}
       </div>
-      <p>All item will be sent to you as soon as possible.</p>
+      <p>
+        All item will be sent to you as soon as possible at following address:
+      </p>
+      <p>{values.address}</p>
     </div>
   );
 };

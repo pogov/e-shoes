@@ -17,7 +17,7 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
         <div className={styles.sizes}>
           <p>Sizes:</p>
           {item.sizes.map((size) => (
-            <p>{size}</p>
+            <p key={size}>{size}</p>
           ))}
         </div>
       </div>
