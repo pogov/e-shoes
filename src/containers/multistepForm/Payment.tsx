@@ -15,6 +15,7 @@ interface Props {
 const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
   const shippingFixed = parseFloat(values.shipping.replace(",", "."));
   const totalToPay = total + shippingFixed;
+  const totalToPayFixed = Number(totalToPay.toFixed(2));
   return (
     <div className={styles.grid}>
       <div className={styles.cartReview}>
@@ -32,7 +33,7 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
           <h4>Shipping: {values.shipping}</h4>
         </div>
         <div className={styles.total}>
-          <h3>Total: {totalToPay}</h3>
+          <h3>Total: {totalToPayFixed}</h3>
         </div>
       </div>
       <div className={styles.stripeContainer}>
@@ -41,7 +42,7 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
           type="button"
           onClick={() => submit(values)}
           className={styles.backBtn}>
-          pay {totalToPay}
+          pay {totalToPayFixed}
         </button>
       </div>
     </div>

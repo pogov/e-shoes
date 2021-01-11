@@ -11,7 +11,7 @@ const NavBar: React.FC = () => {
   return (
     <header className={styles.header}>
       <nav ref={modalRef} className={styles.nav}>
-        <div className={styles.logoWrapper}>logo</div>
+        <div className={styles.logoWrapper}>e-Shoes</div>
         {/* searchbar and filterbar comp */}
         {/* links / categories */}
         <CartIcon handler={setIsModalOpen} />

@@ -23,9 +23,15 @@ interface Props {
   total: number;
   clear: any;
   setShipping: any;
+  items: any;
 }
 
-const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
+const MultipageForm: React.FC<Props> = ({
+  total,
+  clear,
+  setShipping,
+  items,
+}) => {
   const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState<PaymentIntent.Status>("processing");
@@ -41,9 +47,11 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
   };
 
   const handleSubmit = async (values: FormikValues) => {
-    const totalFixed =
-      Number(total.toFixed(2)) + parseFloat(values.shipping.replace(",", "."));
-    const amount = totalFixed * 100;
+    const shippingAsNumber = parseFloat(values.shipping.replace(",", "."));
+    const amount = (total + shippingAsNumber) * 100;
+    const amountFixed = Number(amount.toFixed(2));
+
+    values.boughtItems = items;
 
     const bilingDetails = {
       name: values.fullname,
@@ -54,7 +62,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
 
     setIsProcessing(true);
     const cardElement = elements && elements.getElement("card");
-    const secret = await getClientSecretKey(amount);
+    const secret = await getClientSecretKey(amountFixed);
 
     if (!stripe || !cardElement) return;
 
@@ -103,6 +111,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
           isUser: false,
           termsChecked: false,
           shipping: "14,00",
+          boughtItems: [],
         }}
         onSubmit={(values) => {
           if (step < 2) {
@@ -113,6 +122,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
         {({ values, errors }) => (
           <Form>
             {renderStep(step, values, status, handleSubmit, values.shipping)}
+            {isProcessing && <p>Processing payment...</p>}
             {step > 1 && total !== 0 && (
               <button
                 className={styles.formBtn_back}
@@ -139,6 +149,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
 const mapStateToProps = (state: any) => {
   const { cart } = state;
   return {
+    items: cart.cartItems,
     total: cart.total,
   };
 };

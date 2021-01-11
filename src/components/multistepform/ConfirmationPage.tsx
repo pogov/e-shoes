@@ -2,6 +2,7 @@ import React from "react";
 import { FormikValues } from "formik";
 import styles from "./ConfirmationPage.module.scss";
 import { PaymentIntent } from "@stripe/stripe-js";
+import CartDetails from "../../components/cartDetails/CartDetails";
 
 interface Props {
   values: FormikValues;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const ConfirmationPage: React.FC<Props> = ({ values, status }) => {
+  const { boughtItems } = values;
   return (
     <div className={styles.confirmationWrapper}>
       {status === "succeeded" ? (
@@ -16,13 +18,19 @@ const ConfirmationPage: React.FC<Props> = ({ values, status }) => {
       ) : (
         <h3>Something went wrong...</h3>
       )}
-      <h3>Data confirmation</h3>
-      <p>username: {values.username}</p>
-      <p>is our customer: {values.isUser ? "yes" : "no"}</p>
-      <p>email: {values.email}</p>
-      <p>fullname: {values.fullname}</p>
-      <p>address: {values.address}</p>
-      <p>phone: {values.phone}</p>
+      <p>Dear {values.fullname},</p>
+      <p>Your payment status is: {status}</p>
+      <p>You have bought:</p>
+      <div className={styles.boughtItems}>
+        {boughtItems.map((item: any) => (
+          <CartDetails
+            item={item}
+            key={`${item._id}${item.size}`}
+            cart={false}
+          />
+        ))}
+      </div>
+      <p>All item will be sent to you as soon as possible.</p>
     </div>
   );
 };
