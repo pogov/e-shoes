@@ -10,7 +10,7 @@
     z-index: 0;
 
     .info{
-        background-color: rgba(200, 200, 200, .5);
+        background-color: rgba(240, 240, 240, 0.5);
         position: absolute;
         bottom: -100%;
         left: 0;
@@ -18,23 +18,11 @@
         margin: 0 auto;
         text-transform: capitalize;
         transition: .5s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
         padding: 0 1em;
         color: darkslategray;
         font-size: 1.1em;
         font-weight: 500;
-
-        .addBtn{
-            height: 2em;
-            background-color: white;
-            border: none;
-            outline: none;
-            color: darkslategray;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        text-align: start;
     }
 
     &:hover .info{

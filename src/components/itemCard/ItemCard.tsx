@@ -12,7 +12,7 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
       <div className={styles.info}>
         <div>
           <p>{item.name}</p>
-          <p>{item.price} $</p>
+          <p>Price: {item.price}</p>
         </div>
       </div>
     </div>
