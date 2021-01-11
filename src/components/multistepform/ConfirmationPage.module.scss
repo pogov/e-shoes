@@ -1,0 +1,11 @@
+@import "./UserDetailsPage.module.scss";
+
+.confirmationWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .boughtItems{
+        max-width: 70vw;
+    }
+}
