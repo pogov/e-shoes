@@ -101,6 +101,7 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
           address: "",
           phone: "",
           isUser: false,
+          termsChecked: false,
           shipping: "14,00",
         }}
         onSubmit={(values) => {
@@ -113,15 +114,19 @@ const MultipageForm: React.FC<Props> = ({ total, clear, setShipping }) => {
           <Form>
             {renderStep(step, values, status, handleSubmit, values.shipping)}
             {step > 1 && total !== 0 && (
-              <button type="button" onClick={handleBackStep}>
-                back
+              <button
+                className={styles.formBtn_back}
+                type="button"
+                onClick={handleBackStep}>
+                back to Details
               </button>
             )}
             {step < 2 && (
               <button
+                className={styles.formBtn}
                 type="submit"
                 disabled={isDisabled(errors) || isProcessing}>
-                next
+                proceed to payment
               </button>
             )}
           </Form>

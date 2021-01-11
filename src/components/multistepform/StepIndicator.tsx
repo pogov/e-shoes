@@ -7,8 +7,7 @@ interface Props {
 
 const StepIndicator: React.FC<Props> = ({ step }) => {
   const stepsDivs = [
-    // { stepNum: 1, pageName: "Login" },
-    { stepNum: 1, pageName: "User Details" },
+    { stepNum: 1, pageName: "Details" },
     { stepNum: 2, pageName: "Payment" },
     { stepNum: 3, pageName: "Confirmation" },
   ];

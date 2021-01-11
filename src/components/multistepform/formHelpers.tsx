@@ -1,4 +1,3 @@
-// import LoginPage from "./LoginPage";
 import UserDetailsPage from "./UserDetailsPage";
 import Payment from "../../containers/multistepForm/Payment";
 import ConfirmationPage from "./ConfirmationPage";
@@ -13,8 +12,6 @@ export const renderStep = (
   shipping: string,
 ) => {
   switch (step) {
-    // case 1:
-    //   return <LoginPage />;
     case 1:
       return <UserDetailsPage shipping={shipping} />;
     case 2:
@@ -77,6 +74,14 @@ export const validatePhoneNumber = (value: number) => {
       )
   ) {
     error = "Invalid phone number";
+  }
+  return error;
+};
+
+export const termsChecked = (value: boolean) => {
+  let error = "";
+  if (!value) {
+    error = "This field is required";
   }
   return error;
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { FormikValues } from "formik";
-import styles from "./LoginPage.module.scss";
+import styles from "./ConfirmationPage.module.scss";
 import { PaymentIntent } from "@stripe/stripe-js";
 
 interface Props {
@@ -9,9 +9,8 @@ interface Props {
 }
 
 const ConfirmationPage: React.FC<Props> = ({ values, status }) => {
-  console.log("status log from confirmation page", status);
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.confirmationWrapper}>
       {status === "succeeded" ? (
         <h2>Congratulasion!!! Payment has succeeded!</h2>
       ) : (

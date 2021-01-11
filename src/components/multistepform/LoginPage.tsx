@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import styles from "./LoginPage.module.scss";
+import styles from "./UserDetailsPage.module.scss";
 import ErrorText from "./ErrorText";
 import { validateUser, validateEmail } from "./formHelpers";
 

@@ -14,11 +14,6 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
           <p>{item.name}</p>
           <p>{item.price} $</p>
         </div>
-        {/* <button
-          onClick={() => console.log(`add to cart item nr: ${item._id}`)}
-          className={styles.addBtn}>
-          add to cart
-        </button> */}
       </div>
     </div>
   );

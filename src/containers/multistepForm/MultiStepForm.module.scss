@@ -1,6 +1,21 @@
+@import '../itemDetails/ItemDetails.module.scss';
 .wrapper{
     margin-bottom: 5em;
     form{
         text-align: center;
+    }
+
+    .formBtn{
+        margin-top: 2em;
+        @include btn-reset;
+        @include btn-style;
+        color: white;
+        background-color: black;
+
+        &_back{
+            @extend .formBtn;
+            color: rgba(0, 0, 0, 0.392);
+            background-color: rgba(240, 240, 240, 0.6);
+        }
     }
 }
