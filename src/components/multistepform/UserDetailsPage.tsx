@@ -52,6 +52,7 @@ const UserDetailsPage: React.FC<Props> = ({ shipping }) => {
             type="text"
             name="phone"
             label="phone"
+            maxlength="12"
             validate={validatePhoneNumber}
             placeholder="phone number*"
           />
