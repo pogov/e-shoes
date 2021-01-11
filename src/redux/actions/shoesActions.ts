@@ -4,6 +4,7 @@ export enum ActionTypes {
   GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST",
   GET_ITEMS_SUCCES = "GET_ITEMS_SUCCES",
   GET_ITEMS_FAILURE = "GET_ITEMS_FAILURE",
+  SEARCH_ON_CHANGE = "SEARCH_ON_CHANGE",
 }
 
 type DispatchProp = {
@@ -25,3 +26,8 @@ export const getItems = (page: number, limit: number) => (
       dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: err });
     });
 };
+
+export const onChangeSearch = (value: string) => ({
+  type: ActionTypes.SEARCH_ON_CHANGE,
+  payload: { value },
+});
