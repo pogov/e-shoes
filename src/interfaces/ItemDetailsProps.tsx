@@ -4,10 +4,10 @@ export interface ItemDetailsProps {
   chosenSize: number;
   handleClick: (e: MouseEvent) => void;
   addItemToCart: (
-    i: string,
-    s: number,
-    p: number,
-    n: string,
-    img: string,
+    id: string,
+    size: number,
+    price: number,
+    name: string,
+    imgSrc: string,
   ) => void;
 }

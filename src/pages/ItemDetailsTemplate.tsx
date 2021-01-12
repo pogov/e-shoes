@@ -8,20 +8,9 @@ interface ParamType {
   id: string;
 }
 
-const initialItem = {
-  _id: "",
-  sizes: [42],
-  type: "",
-  description: "",
-  name: "",
-  price: 0,
-  imgSrc: "",
-  tags: ["sport"],
-};
-
 const ItemDetailsTemplate: React.FC = ({ shoe }: any) => {
   const { id } = useParams<ParamType>();
-  const [item, setItem] = useState<ItemsListProps>(initialItem);
+  const [item, setItem] = useState<ItemsListProps>();
   const [chosenSize, setChosenSize] = useState<number>(0);
 
   const handleClick = (e: any) => {
@@ -36,6 +25,8 @@ const ItemDetailsTemplate: React.FC = ({ shoe }: any) => {
     }
     setItem(shoe);
   }, [shoe, id]);
+
+  if (!item) return null;
 
   return (
     <ItemDetails

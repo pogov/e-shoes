@@ -53,7 +53,6 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <p>{price} PLN</p>
           </div>
           <div className={styles.btnContainer}>
-            {/* {isChosenSize && <p>your size: {chosenSize}</p>} */}
             <DropdownMenu
               list={sizes}
               header="choose size"
