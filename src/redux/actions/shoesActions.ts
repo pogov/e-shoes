@@ -1,4 +1,4 @@
-import { ItemsListProps } from "../../interfaces/ItemsListProps";
+// import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 export enum ActionTypes {
   GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST",
@@ -8,7 +8,7 @@ export enum ActionTypes {
 
 type DispatchProp = {
   type: string;
-  payload?: ItemsListProps[];
+  payload?: any;
 };
 
 export const getItems = (page: number, limit: number) => (
@@ -22,6 +22,6 @@ export const getItems = (page: number, limit: number) => (
       dispatch({ type: ActionTypes.GET_ITEMS_SUCCES, payload: result });
     })
     .catch((err) => {
-      dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: err });
+      dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: { err } });
     });
 };

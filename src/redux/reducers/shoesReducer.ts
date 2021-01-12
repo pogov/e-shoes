@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   next: {},
   previous: null,
+  errors: null,
 };
 
 type Initial = {
@@ -34,8 +35,11 @@ export const shoes = (state: Initial = initialState, action: any) => {
       };
 
     case ActionTypes.GET_ITEMS_FAILURE:
-      console.log(payload);
-      break;
+      return {
+        ...state,
+        loading: false,
+        errors: payload.err,
+      };
 
     default:
       break;

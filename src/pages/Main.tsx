@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { getItems } from "../redux/actions/shoesActions";
 import ItemsList from "../containers/itemsList/ItemsList";
 import styles from "./Main.module.scss";
+import Loader from "../components/loader/Loader";
 
-const Main: React.FC = ({ getItems, next, loading }: any) => {
+const Main: React.FC = ({ getItems, next, loading, errors }: any) => {
   //
   const handleClick = useCallback(
     (next: any) => {
@@ -14,10 +15,11 @@ const Main: React.FC = ({ getItems, next, loading }: any) => {
     [getItems],
   );
 
-  const showButton = next && !loading;
+  const showButton = next && !loading && !errors;
 
   return (
     <main className={styles.wrapper}>
+      {errors && <Loader errors={errors} />}
       <ItemsList />
       {showButton && (
         <button onClick={() => handleClick(next)} className={styles.moreBtn}>
@@ -30,9 +32,9 @@ const Main: React.FC = ({ getItems, next, loading }: any) => {
 
 const mapStateToProps = (state: any) => {
   const {
-    shoes: { next, loading },
+    shoes: { next, loading, errors },
   } = state;
-  return { next, loading };
+  return { next, loading, errors };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
