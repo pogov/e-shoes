@@ -5,6 +5,7 @@ import { ItemDetailsProps } from "../../interfaces/ItemDetailsProps";
 import { addToCart } from "../../redux/actions/cartActions";
 import DropdownMenu from "../../components/dropDown/DropdownMenu";
 import styles from "./ItemDetails.module.scss";
+import { Dispatch } from "redux";
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
   item,
@@ -87,7 +88,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   addItemToCart: (
     id: string,
     size: number,

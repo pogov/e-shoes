@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from "react";
 
-const useClickOutside = (current: HTMLDivElement, setter: any) => {
+const useClickOutside = (
+  current: HTMLDivElement,
+  setter: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const clickOutside = useCallback(
     (e: MouseEvent) => {
       const target = e.target ? e.target : "";

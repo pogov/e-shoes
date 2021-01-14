@@ -2,7 +2,7 @@ import { ItemsListProps } from "./ItemsListProps";
 export interface ItemDetailsProps {
   item: ItemsListProps;
   chosenSize: number;
-  handleClick: (e: MouseEvent) => void;
+  handleClick: (e: React.MouseEvent) => void;
   addItemToCart: (
     id: string,
     size: number,

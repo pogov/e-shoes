@@ -1,13 +1,11 @@
-// import { ItemsListProps } from "../../interfaces/ItemsListProps";
-
 export enum ActionTypes {
   GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST",
   GET_ITEMS_SUCCES = "GET_ITEMS_SUCCES",
   GET_ITEMS_FAILURE = "GET_ITEMS_FAILURE",
 }
 
-type DispatchProp = {
-  type: string;
+export type DispatchProp = {
+  type: ActionTypes;
   payload?: any;
 };
 

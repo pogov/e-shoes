@@ -8,7 +8,11 @@ import MainTemplate from "./layouts/MainTemplate";
 import ItemDetailsTemplate from "./pages/ItemDetailsTemplate";
 import "./App.scss";
 
-const App: React.FC = ({ getItems }: any) => {
+interface Props {
+  getItems: typeof getItems;
+}
+
+const App: React.FC<Props> = ({ getItems }) => {
   useEffect(() => {
     getItems(1, 9);
   }, [getItems]);
@@ -26,6 +30,7 @@ const App: React.FC = ({ getItems }: any) => {
   );
 };
 
+// problem z otypowaniem dispatch
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getItems: (page: number, limit: number) => dispatch(getItems(page, limit)),

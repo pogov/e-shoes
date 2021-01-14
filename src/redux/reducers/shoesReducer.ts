@@ -1,4 +1,4 @@
-import { ActionTypes } from "../actions/shoesActions";
+import { ActionTypes, DispatchProp } from "../actions/shoesActions";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 const initialState = {
@@ -9,14 +9,18 @@ const initialState = {
   errors: null,
 };
 
-type Initial = {
+export type ShoesInitial = {
   shoes: ItemsListProps[];
   loading: boolean;
   next: object;
   previous: object | null;
+  errors: object | null;
 };
 
-export const shoes = (state: Initial = initialState, action: any) => {
+export const shoes = (
+  state: ShoesInitial = initialState,
+  action: DispatchProp,
+) => {
   const { type, payload } = action;
 
   switch (type) {

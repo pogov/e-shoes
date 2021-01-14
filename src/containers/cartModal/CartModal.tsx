@@ -7,8 +7,10 @@ import {
   decreaseQuantity,
   deleteItem,
 } from "../../redux/actions/cartActions";
+import { Initial } from "../../redux/reducers/cartReducer";
 import styles from "./CartModal.module.scss";
 import CartDetails from "../../components/cartDetails/CartDetails";
+import { Dispatch } from "redux";
 
 type CartModalProps = {
   items: any;
@@ -81,7 +83,11 @@ const CartModal: React.FC<CartModalProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+type State = {
+  cart: Initial;
+};
+
+const mapStateToProps = (state: State) => {
   const { cart } = state;
   return {
     items: cart.cartItems,
@@ -89,7 +95,7 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     clear: () => dispatch(clearCart()),
     increase: (id: string) => dispatch(increaseQuantity(id)),

@@ -7,7 +7,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [dynamicHeader, setDynamicHeader] = useState(header);
 
-  const handleClick = (event: any, chosen: any) => {
+  const handleClick = (event: React.MouseEvent, chosen: string) => {
     handler(event);
     setIsVisible(false);
     setDynamicHeader(chosen);

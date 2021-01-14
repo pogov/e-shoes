@@ -1,5 +1,5 @@
 export interface DropdownProps {
-  list: any;
+  list: Array<string | number>;
   header: string;
-  handler: (e: MouseEvent) => void;
+  handler: (e: React.MouseEvent) => void;
 }

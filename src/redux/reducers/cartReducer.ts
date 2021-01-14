@@ -14,7 +14,12 @@ export type Initial = {
   cartItems: ItemsListProps[];
 };
 
-export const cart = (state: Initial = initialState, action: any) => {
+export type ActionProp = {
+  type: CartActionTypes;
+  payload?: any;
+};
+
+export const cart = (state: Initial = initialState, action: ActionProp) => {
   const { type, payload } = action;
 
   switch (type) {

@@ -4,8 +4,14 @@ import { getItems } from "../redux/actions/shoesActions";
 import ItemsList from "../containers/itemsList/ItemsList";
 import styles from "./Main.module.scss";
 import Loader from "../components/loader/Loader";
+import { ShoesInitial } from "../redux/reducers/shoesReducer";
 
-const Main: React.FC = ({ getItems, next, loading, errors }: any) => {
+type ShoesStateProps = Pick<ShoesInitial, "next" | "loading" | "errors">;
+interface Props extends ShoesStateProps {
+  getItems: typeof getItems;
+}
+
+const Main: React.FC<Props> = ({ getItems, next, loading, errors }) => {
   //
   const handleClick = useCallback(
     (next: any) => {
@@ -30,13 +36,18 @@ const Main: React.FC = ({ getItems, next, loading, errors }: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+interface ShoesState {
+  shoes: ShoesInitial;
+}
+
+const mapStateToProps = (state: ShoesState) => {
   const {
     shoes: { next, loading, errors },
   } = state;
   return { next, loading, errors };
 };
 
+// problem z otypowaniem dispatch
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getItems: (page: number, limit: number) => dispatch(getItems(page, limit)),

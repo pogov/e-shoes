@@ -5,6 +5,7 @@ import StepIndicator from "../../components/multistepform/StepIndicator";
 import styles from "./MultiStepForm.module.scss";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { clearCart, setShippingValue } from "../../redux/actions/cartActions";
 import { StripeError } from "@stripe/stripe-js";
 
@@ -161,7 +162,7 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     clear: () => dispatch(clearCart()),
     setShipping: (shippingValue: string) =>
