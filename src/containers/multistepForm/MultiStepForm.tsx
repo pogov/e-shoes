@@ -6,8 +6,14 @@ import styles from "./MultiStepForm.module.scss";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { clearCart, setShippingValue } from "../../redux/actions/cartActions";
+import {
+  CartActionTypes,
+  clearCart,
+  setShippingValue,
+} from "../../redux/actions/cartActions";
 import { StripeError } from "@stripe/stripe-js";
+import { Initial } from "../../redux/reducers/cartReducer";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 const getClientSecretKey = async (amount: number) => {
   const data = await fetch("http://localhost:5500/payment-intent", {
@@ -22,9 +28,11 @@ const getClientSecretKey = async (amount: number) => {
 
 interface Props {
   total: number;
-  clear: any;
-  setShipping: any;
-  items: any;
+  clear: () => { type: CartActionTypes };
+  setShipping: (
+    shippingValue: string,
+  ) => { type: CartActionTypes; payload: { shippingValue: string } };
+  items: ItemsListProps[];
 }
 
 const MultipageForm: React.FC<Props> = ({
@@ -154,7 +162,11 @@ const MultipageForm: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+type State = {
+  cart: Initial;
+};
+
+const mapStateToProps = (state: State) => {
   const { cart } = state;
   return {
     items: cart.cartItems,

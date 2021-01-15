@@ -6,8 +6,13 @@ import styles from "./NavBar.module.scss";
 
 const NavBar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const modalRef = useRef(null);
-  useClickOutside(modalRef.current!, setIsModalOpen);
+
+  const current = modalRef.current;
+
+  useClickOutside(current!, setIsModalOpen);
+
   return (
     <header className={styles.header}>
       <nav ref={modalRef} className={styles.nav}>

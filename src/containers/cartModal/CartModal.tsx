@@ -11,15 +11,16 @@ import { Initial } from "../../redux/reducers/cartReducer";
 import styles from "./CartModal.module.scss";
 import CartDetails from "../../components/cartDetails/CartDetails";
 import { Dispatch } from "redux";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 type CartModalProps = {
-  items: any;
+  items: ItemsListProps[];
   total: number;
-  clear: any;
-  handler: any;
-  increase: any;
-  decrease: any;
-  deleteItem: any;
+  clear: typeof clearCart;
+  handler: React.Dispatch<React.SetStateAction<boolean>>;
+  increase: typeof increaseQuantity;
+  decrease: typeof decreaseQuantity;
+  deleteItem: typeof deleteItem;
 };
 
 const CartModal: React.FC<CartModalProps> = ({
@@ -57,9 +58,9 @@ const CartModal: React.FC<CartModalProps> = ({
         <div className={styles.innerWrapper}>
           <div className={styles.list}>
             {items &&
-              items.map((item: any) => (
+              items.map((item: ItemsListProps) => (
                 <CartDetails
-                  key={`${item._id}${item.size}`}
+                  key={`${item._id}${item.sizes}`}
                   item={item}
                   increase={increase}
                   decrease={decrease}

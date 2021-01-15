@@ -5,9 +5,9 @@ import useClickOutside from "../../hooks/useClickOutside";
 
 const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [dynamicHeader, setDynamicHeader] = useState(header);
+  const [dynamicHeader, setDynamicHeader] = useState<string | number>(header);
 
-  const handleClick = (event: React.MouseEvent, chosen: string) => {
+  const handleClick = (event: React.MouseEvent, chosen: string | number) => {
     handler(event);
     setIsVisible(false);
     setDynamicHeader(chosen);
@@ -26,7 +26,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
       </div>
       {isVisible && (
         <div className={styles.list}>
-          {list.map((item: any) => (
+          {list.map((item: string | number) => (
             <div
               key={item}
               className={styles.listItem}

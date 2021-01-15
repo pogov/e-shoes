@@ -1,8 +1,8 @@
-// import React from "react";
+import React from "react";
 import styles from "./Loader.module.scss";
 
 interface Props {
-  errors?: any;
+  errors?: { message: string };
 }
 
 const Loader: React.FC<Props> = ({ errors }) => (

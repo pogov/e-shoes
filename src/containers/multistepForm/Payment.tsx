@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import CartDetails from "../../components/cartDetails/CartDetails";
 import { CardElement } from "@stripe/react-stripe-js";
 import { FormikValues } from "formik";
+import { Initial } from "../../redux/reducers/cartReducer";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 interface Props {
-  items: any;
+  items: ItemsListProps[];
   total: number;
   submit: (values: FormikValues) => Promise<void>;
   values: FormikValues;
@@ -21,7 +23,7 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
       <div className={styles.cartReview}>
         <div>
           {items &&
-            items.map((item: any) => (
+            items.map((item) => (
               <CartDetails
                 item={item}
                 key={`${item._id}${item.size}`}
@@ -49,7 +51,11 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+type State = {
+  cart: Initial;
+};
+
+const mapStateToProps = (state: State) => {
   const { cart } = state;
   return {
     items: cart.cartItems,

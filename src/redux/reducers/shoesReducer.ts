@@ -14,7 +14,7 @@ export type ShoesInitial = {
   loading: boolean;
   next: object;
   previous: object | null;
-  errors: object | null;
+  errors: { message: string } | null;
 };
 
 export const shoes = (

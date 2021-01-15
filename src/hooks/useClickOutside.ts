@@ -7,7 +7,7 @@ const useClickOutside = (
   const clickOutside = useCallback(
     (e: MouseEvent) => {
       const target = e.target ? e.target : "";
-
+      // problem z otypowaniem target
       const doesCurrentContainsTarget = (ref: HTMLDivElement, target: any) => {
         return ref.contains(target);
       };

@@ -1,13 +1,21 @@
 import React from "react";
 import styles from "./CartDetails.module.scss";
 import { ReactComponent as DeleteIcon } from "../../assets/deleteIcon.svg";
+import { CartActionTypes } from "../../redux/actions/cartActions";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 interface Props {
-  item: any;
-  increase?: any;
-  decrease?: any;
+  item: ItemsListProps;
+  increase?: (
+    _id: string,
+  ) => { type: CartActionTypes; payload: { _id: string } };
+  decrease?: (
+    _id: string,
+  ) => { type: CartActionTypes; payload: { _id: string } };
   cart: boolean;
-  deleteItem?: any;
+  deleteItem?: (
+    _id: string,
+  ) => { type: CartActionTypes; payload: { _id: string } };
 }
 
 const CartDetails: React.FC<Props> = ({
@@ -25,7 +33,7 @@ const CartDetails: React.FC<Props> = ({
         <p>size: {item.size}</p>
         <p>quantity: {item.quantity}</p>
       </div>
-      {cart && (
+      {cart && increase && decrease && deleteItem && (
         <div className={styles.btnsContainer}>
           <div className={styles.qBtns}>
             <button onClick={() => increase(item._id)}>+</button>

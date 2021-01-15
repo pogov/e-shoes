@@ -1,5 +1,5 @@
 export interface CartIconProps {
   isItem: boolean;
   itemCount: number;
-  handler: any;
+  handler: React.SetStateAction<boolean>;
 }
