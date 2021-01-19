@@ -8,12 +8,19 @@ export const renderStep = (
   values: FormikValues,
   handleSubmit: (values: FormikValues) => Promise<void>,
   shipping: string,
+  isProcessing: boolean,
 ) => {
   switch (step) {
     case 1:
       return <UserDetailsPage shipping={shipping} />;
     case 2:
-      return <Payment submit={handleSubmit} values={values} />;
+      return (
+        <Payment
+          submit={handleSubmit}
+          values={values}
+          isProcessing={isProcessing}
+        />
+      );
     case 3:
       return <ConfirmationPage values={values} />;
     default:

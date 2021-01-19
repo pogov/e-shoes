@@ -99,7 +99,13 @@ const MultipageForm: React.FC<Props> = ({
         }}>
         {({ values, errors }) => (
           <Form>
-            {renderStep(step, values, handleSubmit, values.shipping)}
+            {renderStep(
+              step,
+              values,
+              handleSubmit,
+              values.shipping,
+              isProcessing,
+            )}
             {isProcessing && <p>Processing payment...</p>}
             {paymentError && !isProcessing && (
               <div>

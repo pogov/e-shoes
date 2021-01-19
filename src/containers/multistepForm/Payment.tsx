@@ -12,9 +12,16 @@ interface Props {
   total: number;
   submit: (values: FormikValues) => Promise<void>;
   values: FormikValues;
+  isProcessing: boolean;
 }
 
-const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
+const Payment: React.FC<Props> = ({
+  items,
+  total,
+  submit,
+  values,
+  isProcessing,
+}) => {
   const shippingFixed = parseFloat(values.shipping.replace(",", "."));
   const totalToPay = total + shippingFixed;
   const totalToPayFixed = Number(totalToPay.toFixed(2));
@@ -43,7 +50,8 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
         <button
           type="button"
           onClick={() => submit(values)}
-          className={styles.backBtn}>
+          className={styles.backBtn}
+          disabled={isProcessing}>
           pay {totalToPayFixed}
         </button>
       </div>
