@@ -12,19 +12,9 @@ import {
   setShippingValue,
 } from "../../redux/actions/cartActions";
 import { StripeError } from "@stripe/stripe-js";
-import { Initial } from "../../redux/reducers/cartReducer";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-
-const getClientSecretKey = async (amount: number) => {
-  const data = await fetch("http://localhost:5500/payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount }),
-  });
-
-  const { client_secret } = await data.json();
-  return client_secret;
-};
+import { StateType } from "../../interfaces/StateType";
+import { handleStripe } from "../multistepForm/handleStripe";
 
 interface Props {
   total: number;
@@ -69,38 +59,16 @@ const MultipageForm: React.FC<Props> = ({
       phone: values.phone,
     };
 
-    setIsProcessing(true);
-    const cardElement = elements && elements.getElement("card");
-    const secret = await getClientSecretKey(amountFixed);
-
-    if (!stripe || !cardElement) return;
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: bilingDetails,
-    });
-
-    if (error) {
-      console.log(error);
-    }
-
-    if (!paymentMethod) return;
-
-    const result = await stripe.confirmCardPayment(secret, {
-      payment_method: paymentMethod.id,
-    });
-
-    if (result.error) {
-      console.log(result.error);
-      setIsProcessing(false);
-      setPaymentError(result.error);
-    }
-
-    if (!result.paymentIntent) return;
-    setIsProcessing(false);
-    setStep(3);
-    clear();
+    handleStripe(
+      setIsProcessing,
+      setPaymentError,
+      setStep,
+      clear,
+      bilingDetails,
+      amountFixed,
+      stripe,
+      elements,
+    );
   };
 
   const isDisabled = (errors: FormikErrors<FormikValues>) => {
@@ -162,11 +130,7 @@ const MultipageForm: React.FC<Props> = ({
   );
 };
 
-type State = {
-  cart: Initial;
-};
-
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: StateType) => {
   const { cart } = state;
   return {
     items: cart.cartItems,
