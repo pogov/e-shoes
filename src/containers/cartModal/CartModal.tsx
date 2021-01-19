@@ -7,11 +7,11 @@ import {
   decreaseQuantity,
   deleteItem,
 } from "../../redux/actions/cartActions";
-import { Initial } from "../../redux/reducers/cartReducer";
 import styles from "./CartModal.module.scss";
 import CartDetails from "../../components/cartDetails/CartDetails";
 import { Dispatch } from "redux";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
+import { StateType } from "../../interfaces/StateType";
 
 type CartModalProps = {
   items: ItemsListProps[];
@@ -84,11 +84,7 @@ const CartModal: React.FC<CartModalProps> = ({
   );
 };
 
-type State = {
-  cart: Initial;
-};
-
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: StateType) => {
   const { cart } = state;
   return {
     items: cart.cartItems,
