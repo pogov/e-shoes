@@ -11,6 +11,8 @@ const NavBar: React.FC = () => {
 
   const current = modalRef.current;
 
+  const toggle = () => setIsModalOpen((prev) => !prev);
+
   useClickOutside(current!, setIsModalOpen);
 
   return (
@@ -18,9 +20,8 @@ const NavBar: React.FC = () => {
       <nav ref={modalRef} className={styles.nav}>
         <div className={styles.logoWrapper}>e-Shoes</div>
         {/* searchbar and filterbar comp */}
-        {/* links / categories */}
-        <CartIcon handler={setIsModalOpen} />
-        {isModalOpen && <CartModal handler={setIsModalOpen} />}
+        <CartIcon handler={toggle} />
+        {isModalOpen && <CartModal handler={toggle} />}
       </nav>
     </header>
   );

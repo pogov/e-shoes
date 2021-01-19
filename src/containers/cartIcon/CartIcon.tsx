@@ -24,9 +24,7 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
   }, [itemCount]);
 
   return (
-    <div
-      className={styles.cartIcon}
-      onClick={() => handler((prev: React.SetStateAction<boolean>) => !prev)}>
+    <div className={styles.cartIcon} onClick={() => handler()}>
       <Icon className={styles.icon} />
       {isItem && (
         <div

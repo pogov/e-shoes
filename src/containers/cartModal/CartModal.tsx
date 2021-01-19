@@ -17,7 +17,7 @@ type CartModalProps = {
   items: ItemsListProps[];
   total: number;
   clear: typeof clearCart;
-  handler: React.Dispatch<React.SetStateAction<boolean>>;
+  handler: () => void;
   increase: typeof increaseQuantity;
   decrease: typeof decreaseQuantity;
   deleteItem: typeof deleteItem;
@@ -38,7 +38,7 @@ const CartModal: React.FC<CartModalProps> = ({
         <Link
           to="/cart"
           className={styles.checkoutBtn_Link}
-          onClick={() => handler(false)}>
+          onClick={() => handler()}>
           checkout
         </Link>
       );
