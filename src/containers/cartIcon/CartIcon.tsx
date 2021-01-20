@@ -5,7 +5,7 @@ import { StateType } from "../../interfaces/StateType";
 import styles from "./CartIcon.module.scss";
 import { ReactComponent as Icon } from "../../assets/icon.svg";
 
-const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
+const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, onClick }) => {
   const [triggerAnimation, setTriggerAnimationTo] = useState(false);
   const itemNumberElement = useRef<HTMLDivElement>(null);
 
@@ -20,7 +20,7 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
   }, [itemCount]);
 
   return (
-    <div className={styles.cartIcon} onClick={() => handler()}>
+    <div className={styles.cartIcon} onClick={onClick}>
       <Icon className={styles.icon} />
       {isItem && (
         <div
