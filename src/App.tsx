@@ -7,9 +7,12 @@ import Checkout from "./pages/Checkout";
 import MainTemplate from "./layouts/MainTemplate";
 import ItemDetailsTemplate from "./pages/ItemDetailsTemplate";
 import "./App.scss";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { StateType } from "./interfaces/StateType";
 
 interface Props {
-  getItems: typeof getItems;
+  getItems: (page: number, limit: number) => Promise<void>;
 }
 
 const App: React.FC<Props> = ({ getItems }) => {
@@ -30,8 +33,9 @@ const App: React.FC<Props> = ({ getItems }) => {
   );
 };
 
-// problem z otypowaniem dispatch
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<StateType, undefined, AnyAction>,
+) => {
   return {
     getItems: (page: number, limit: number) => dispatch(getItems(page, limit)),
   };
