@@ -60,7 +60,9 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
               handler={handleClick}
             />
             <br />
-            <button onClick={handleAddItem}>add to cart</button>
+            <button onClick={handleAddItem} data-testid="addItem">
+              add to cart
+            </button>
             {error.length > 0 && !isChosenSize && (
               <p className={styles.error}>{error}</p>
             )}

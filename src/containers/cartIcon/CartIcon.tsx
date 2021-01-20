@@ -20,10 +20,11 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, onClick }) => {
   }, [itemCount]);
 
   return (
-    <div className={styles.cartIcon} onClick={onClick}>
+    <div className={styles.cartIcon} onClick={onClick} data-testid="icon">
       <Icon className={styles.icon} />
       {isItem && (
         <div
+          data-testid="number"
           ref={itemNumberElement}
           className={
             triggerAnimation ? styles.itemNumberActive : styles.itemNumber
