@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import CartDetails from "./CartDetails";
 
 const item = {
@@ -16,6 +16,8 @@ const item = {
 };
 
 describe("CartDetails", () => {
+  afterEach(() => cleanup());
+
   it("not throws any exception", () => {
     const renderCartDetails = () =>
       render(<CartDetails item={item} cart={false} />);

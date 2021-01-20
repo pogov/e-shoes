@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import ItemCard from "./ItemCard";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 
 const item = {
   _id: "234juhjhf87",
@@ -15,6 +15,8 @@ const item = {
 };
 
 describe("ItemCard", () => {
+  afterEach(() => cleanup());
+
   it("renders without throwing errors", () => {
     const renderItemCard = () =>
       render(

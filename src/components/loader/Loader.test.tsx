@@ -1,8 +1,10 @@
 import React from "react";
 import Loader from "./Loader";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 
 describe("Loader", () => {
+  afterEach(() => cleanup());
+
   it("renders", () => {
     const renderLoader = () => render(<Loader />);
     expect(renderLoader).not.toThrow();
