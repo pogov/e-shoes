@@ -1,5 +1,5 @@
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-import { CartActionTypes } from "../actions/cartActions";
+import { CartActionTypes, AllCartActionsPayload } from "../actions/cartActions";
 
 const initialState = {
   itemCount: 0,
@@ -16,7 +16,12 @@ export type Initial = {
 
 export type ActionProp = {
   type: CartActionTypes;
-  payload?: any;
+  payload?: {
+    _id: string;
+    price: number;
+    shippingValue: string;
+  };
+  // payload?: AllCartActionsPayload;
 };
 
 export const cart = (state: Initial = initialState, action: ActionProp) => {
@@ -25,6 +30,8 @@ export const cart = (state: Initial = initialState, action: ActionProp) => {
   switch (type) {
     //
     case CartActionTypes.ADD_TO_CART:
+      if (!payload) return state;
+
       const ifCartAlreadyContains =
         state.cartItems.filter((item) => item._id === payload._id).length > 0;
       if (ifCartAlreadyContains) return state;
@@ -46,6 +53,8 @@ export const cart = (state: Initial = initialState, action: ActionProp) => {
       };
 
     case CartActionTypes.DELETE_ITEM:
+      if (!payload) return state;
+
       const [itemToDelete] = state.cartItems.filter(
         (item) => item._id === payload._id,
       );
@@ -63,6 +72,8 @@ export const cart = (state: Initial = initialState, action: ActionProp) => {
       };
 
     case CartActionTypes.INCREASE_QUANTITY:
+      if (!payload) return state;
+
       const [itemToIncrease] = state.cartItems.filter(
         (item) => item._id === payload._id,
       );
@@ -84,8 +95,12 @@ export const cart = (state: Initial = initialState, action: ActionProp) => {
       };
 
     case CartActionTypes.DECREASE_QUANTITY:
+      if (!payload) return state;
+
+      const { _id } = payload;
+
       const [itemToDecrease] = state.cartItems.filter(
-        (item) => item._id === payload._id,
+        (item) => item._id === _id,
       );
       const decreasedTotal = state.total - itemToDecrease.price;
 
@@ -106,6 +121,8 @@ export const cart = (state: Initial = initialState, action: ActionProp) => {
       };
 
     case CartActionTypes.SET_SHIPPING:
+      if (!payload) return state;
+
       return {
         ...state,
         shipping: parseFloat(payload.shippingValue.replace(",", ".")),

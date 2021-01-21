@@ -30,20 +30,24 @@ export const shoes = (
       return { ...state, loading: true };
 
     case ActionTypes.GET_ITEMS_SUCCES:
-      return {
-        shoes: [...state.shoes, ...payload.shoes],
-        loading: false,
-        next: payload.next,
-        previous: payload.previous,
-        left: payload.left,
-      };
+      if (payload && payload.shoes)
+        return {
+          shoes: [...state.shoes, ...payload.shoes],
+          loading: false,
+          next: payload.next,
+          previous: payload.previous,
+          left: payload.left,
+        };
+      break;
 
     case ActionTypes.GET_ITEMS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        errors: payload.err,
-      };
+      if (payload)
+        return {
+          ...state,
+          loading: false,
+          errors: payload.error,
+        };
+      break;
 
     default:
       break;

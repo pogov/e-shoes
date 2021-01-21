@@ -1,3 +1,4 @@
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 export enum ActionTypes {
   GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST",
   GET_ITEMS_SUCCES = "GET_ITEMS_SUCCES",
@@ -6,7 +7,14 @@ export enum ActionTypes {
 
 export type DispatchProp = {
   type: ActionTypes;
-  payload?: any;
+  payload?: {
+    shoes?: ItemsListProps[];
+    next?: {};
+    previous?: {};
+    left?: boolean;
+    error?: {};
+  };
+  // payload?: ShoesInitial & { left: boolean } & { error: {} };
 };
 
 export const getItems = (page: number, limit: number) => (
@@ -19,7 +27,7 @@ export const getItems = (page: number, limit: number) => (
     .then((result) => {
       dispatch({ type: ActionTypes.GET_ITEMS_SUCCES, payload: result });
     })
-    .catch((err) => {
-      dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: { err } });
+    .catch((error) => {
+      dispatch({ type: ActionTypes.GET_ITEMS_FAILURE, payload: { error } });
     });
 };
