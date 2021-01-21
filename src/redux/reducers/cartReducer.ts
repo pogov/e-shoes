@@ -1,5 +1,5 @@
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-import { CartActionTypes, AllCartActionsPayload } from "../actions/cartActions";
+import { CartActionTypes } from "../actions/cartActions";
 
 const initialState = {
   itemCount: 0,

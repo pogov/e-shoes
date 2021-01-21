@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
       <nav ref={modalRef} className={styles.nav}>
         <div className={styles.logoWrapper}>e-Shoes</div>
         {/* searchbar and filterbar comp */}
-        <CartIcon onClick={toggle} />
+        <CartIcon data-testid="icon" onClick={toggle} />
         {isModalOpen && <CartModal handler={toggle} />}
       </nav>
     </header>
