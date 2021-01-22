@@ -8,4 +8,9 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk)),
 );
 
+store.subscribe(() => {
+  const { cart } = store.getState();
+  localStorage.setItem("e_Shoes-cart", JSON.stringify(cart));
+});
+
 export default store;

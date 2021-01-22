@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-function useLocalStorage<T>(key: string, initialValue: T) {
+export function getFromLocalStorage<T>(key: string, initialValue: T) {
+  console.log("getFromLocalStorage call");
   const readValue = () => {
     if (typeof window === "undefined") {
       return initialValue;
@@ -12,13 +12,5 @@ function useLocalStorage<T>(key: string, initialValue: T) {
       return initialValue;
     }
   };
-
-  const [storedValue, setStoredValue] = useState(readValue);
-
-  useEffect(() => {
-    setStoredValue(readValue());
-  }, []);
-
-  return [storedValue];
+  return readValue();
 }
-export default useLocalStorage;

@@ -1,5 +1,6 @@
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-import { CartActionTypes, AllCartActionsPayload } from "../actions/cartActions";
+import { CartActionTypes } from "../actions/cartActions";
+import { getFromLocalStorage } from "./reducerHelpers";
 
 const initialState = {
   itemCount: 0,
@@ -24,7 +25,15 @@ export type ActionProp = {
   // payload?: AllCartActionsPayload;
 };
 
-export const cart = (state: Initial = initialState, action: ActionProp) => {
+const initialFromLocalStorage = getFromLocalStorage<Initial>(
+  "e_Shoes-cart",
+  initialState,
+);
+
+export const cart = (
+  state: Initial = initialFromLocalStorage,
+  action: ActionProp,
+) => {
   const { type, payload } = action;
 
   switch (type) {
