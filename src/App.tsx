@@ -28,7 +28,8 @@ const App: React.FC = ({ getItems }: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getItems: (page: number, limit: number) => dispatch(getItems(page, limit)),
+    getItems: (page: number, limit: number, query?: string) =>
+      dispatch(getItems(page, limit, query)),
   };
 };
 

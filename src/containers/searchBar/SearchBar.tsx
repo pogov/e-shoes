@@ -1,19 +1,25 @@
 import React from "react";
 import styles from "./SearchBar.module.scss";
 import { connect } from "react-redux";
-import { onChangeSearch } from "../../redux/actions/shoesActions";
+import { getItems } from "../../redux/actions/shoesActions";
 
 interface Props {
-  onChangeQuery: any;
+  getItems: any;
 }
 
-const SearchBar: React.FC<Props> = ({ onChangeQuery }) => {
-  // const [searched, setSearched] = React.useState("");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    console.log(value);
-    onChangeQuery(value);
-  };
+const SearchBar: React.FC<Props> = ({ getItems }) => {
+  const [searched, setSearched] = React.useState("");
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearched(event.target.value);
+    },
+    [setSearched],
+  );
+
+  React.useEffect(() => {
+    if (!searched) return;
+    getItems(1, 9, searched);
+  }, [searched, getItems]);
   return (
     <div className={styles.searchBar}>
       <input
@@ -22,6 +28,7 @@ const SearchBar: React.FC<Props> = ({ onChangeQuery }) => {
         id="searchbox"
         placeholder="search"
         onChange={handleChange}
+        value={searched}
       />
     </div>
   );
@@ -29,7 +36,8 @@ const SearchBar: React.FC<Props> = ({ onChangeQuery }) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onChangeQuery: (value: string) => dispatch(onChangeSearch(value)),
+    getItems: (page: number, limit: number, query?: string) =>
+      dispatch(getItems(page, limit, query)),
   };
 };
 

@@ -33,6 +33,15 @@ export const shoes = (state: Initial = initialState, action: any) => {
         left: payload.left,
       };
 
+    case ActionTypes.GET_ITEMS_SUCCES_QUERY:
+      return {
+        shoes: [...payload.shoes],
+        loading: false,
+        next: payload.next,
+        previous: payload.previous,
+        left: payload.left,
+      };
+
     case ActionTypes.GET_ITEMS_FAILURE:
       console.log(payload);
       break;
