@@ -14,6 +14,7 @@ export type DispatchProp = {
     previous?: {};
     left?: boolean;
     error?: {};
+    query?: string;
   };
   // payload?: ShoesInitial & { left: boolean } & { error: {} };
 };
@@ -22,7 +23,6 @@ export const getItems = (page: number, limit: number, query?: string) => (
   dispatch: ({ type }: DispatchProp) => void,
 ) => {
   dispatch({ type: ActionTypes.GET_ITEMS_REQUEST });
-  console.log("query from shoesAction", query);
 
   return fetch(
     `http://localhost:5500/api/items?page=${page}&limit=${limit}&query=${query}`,
@@ -30,7 +30,10 @@ export const getItems = (page: number, limit: number, query?: string) => (
     .then((res) => res.json())
     .then((result) => {
       if (query) {
-        dispatch({ type: ActionTypes.GET_ITEMS_SUCCES_QUERY, payload: result });
+        dispatch({
+          type: ActionTypes.GET_ITEMS_SUCCES_QUERY,
+          payload: { ...result, query },
+        });
       } else {
         dispatch({ type: ActionTypes.GET_ITEMS_SUCCES, payload: result });
       }

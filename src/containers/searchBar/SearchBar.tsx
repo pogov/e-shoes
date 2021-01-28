@@ -7,17 +7,11 @@ import { ThunkDispatch } from "redux-thunk";
 import { StateType } from "../../interfaces/StateType";
 
 interface Props {
-  getItems: any;
+  getItems: (page: number, limit: number, query?: string) => Promise<void>;
 }
 
 const SearchBar: React.FC<Props> = ({ getItems }) => {
   const [searched, setSearched] = React.useState("");
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearched(event.target.value);
-    },
-    [setSearched],
-  );
 
   React.useEffect(() => {
     if (!searched) return;
@@ -30,7 +24,7 @@ const SearchBar: React.FC<Props> = ({ getItems }) => {
         name="searchbox"
         id="searchbox"
         placeholder="search"
-        onChange={handleChange}
+        onChange={(e) => setSearched(e.target.value)}
         value={searched}
       />
     </div>

@@ -15,6 +15,7 @@ export type ShoesInitial = {
   next: object;
   previous: object | null;
   errors: { message: string } | null;
+  query?: string;
 };
 
 export const shoes = (
@@ -24,8 +25,6 @@ export const shoes = (
   const { type, payload } = action;
 
   switch (type) {
-    //
-
     case ActionTypes.GET_ITEMS_REQUEST:
       return { ...state, loading: true };
 
@@ -41,14 +40,16 @@ export const shoes = (
       break;
 
     case ActionTypes.GET_ITEMS_SUCCES_QUERY:
-      if (payload && payload.shoes)
+      if (payload && payload.shoes) {
         return {
           shoes: [...payload.shoes],
           loading: false,
           next: payload.next,
           previous: payload.previous,
           left: payload.left,
+          query: payload.query,
         };
+      }
       break;
 
     case ActionTypes.GET_ITEMS_FAILURE:
