@@ -8,16 +8,24 @@ import { ShoesInitial } from "../redux/reducers/shoesReducer";
 import { ThunkDispatch } from "redux-thunk";
 import { StateType } from "../interfaces/StateType";
 import { AnyAction } from "redux";
+import Pagination from "../components/pagination/Pagination";
 
 type ShoesStateProps = Pick<
   ShoesInitial,
-  "next" | "loading" | "errors" | "query"
+  "next" | "loading" | "errors" | "query" | "left"
 >;
 interface Props extends ShoesStateProps {
   getItems: (page: number, limit: number, query?: string) => Promise<void>;
 }
 
-const Main: React.FC<Props> = ({ getItems, next, loading, errors, query }) => {
+const Main: React.FC<Props> = ({
+  getItems,
+  next,
+  loading,
+  errors,
+  query,
+  left,
+}) => {
   //
   const handleClick = (next: any) => {
     if (!next) return;
@@ -30,11 +38,12 @@ const Main: React.FC<Props> = ({ getItems, next, loading, errors, query }) => {
     <main className={styles.wrapper}>
       {errors && <Loader errors={errors} />}
       <ItemsList />
-      {showButton && (
+      <Pagination next={next} left={left} handler={handleClick} />
+      {/* {showButton && (
         <button onClick={() => handleClick(next)} className={styles.moreBtn}>
           load more
         </button>
-      )}
+      )} */}
     </main>
   );
 };
@@ -46,9 +55,9 @@ interface ShoesState {
 
 const mapStateToProps = (state: ShoesState) => {
   const {
-    shoes: { next, loading, errors, query },
+    shoes: { next, loading, errors, query, left },
   } = state;
-  return { next, loading, errors, query };
+  return { next, loading, errors, query, left };
 };
 
 const mapDispatchToProps = (

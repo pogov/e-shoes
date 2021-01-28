@@ -1,0 +1,22 @@
+.wrapper{
+    width: 100%;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .pagination{
+        max-width: 50vw;
+        height: 1.5em;
+        background-color: white;
+        display: flex;
+    
+        .number{
+            margin: 0 .1em;
+            width: 1.5em;
+            border: 1px solid rgba(0,0,0,0.5);
+            padding: .1em;
+            text-align: center;
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { ItemsListProps } from "../../interfaces/ItemsListProps";
 const initialState = {
   shoes: [],
   loading: false,
-  next: {},
+  next: { page: 1, limit: 9 },
   previous: null,
   errors: null,
 };
@@ -12,10 +12,11 @@ const initialState = {
 export type ShoesInitial = {
   shoes: ItemsListProps[];
   loading: boolean;
-  next: object;
+  next: { page: number; limit: number };
   previous: object | null;
   errors: { message: string } | null;
   query?: string;
+  left?: number;
 };
 
 export const shoes = (
