@@ -2,6 +2,9 @@ import React from "react";
 import styles from "./SearchBar.module.scss";
 import { connect } from "react-redux";
 import { getItems } from "../../redux/actions/shoesActions";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { StateType } from "../../interfaces/StateType";
 
 interface Props {
   getItems: any;
@@ -34,7 +37,9 @@ const SearchBar: React.FC<Props> = ({ getItems }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<StateType, undefined, AnyAction>,
+) => {
   return {
     getItems: (page: number, limit: number, query?: string) =>
       dispatch(getItems(page, limit, query)),
