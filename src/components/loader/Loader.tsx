@@ -1,9 +1,13 @@
-// import React from "react";
+import React from "react";
 import styles from "./Loader.module.scss";
 
-const Loader = () => (
+interface Props {
+  errors?: { message: string };
+}
+
+const Loader: React.FC<Props> = ({ errors }) => (
   <div className={styles.loader}>
-    <h1>Loading...</h1>
+    {errors ? <h1>{errors.message}</h1> : <h1>Loading...</h1>}
   </div>
 );
 

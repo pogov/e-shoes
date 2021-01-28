@@ -4,15 +4,24 @@ import { connect } from "react-redux";
 import CartDetails from "../../components/cartDetails/CartDetails";
 import { CardElement } from "@stripe/react-stripe-js";
 import { FormikValues } from "formik";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
+import { StateType } from "../../interfaces/StateType";
 
 interface Props {
-  items: any;
+  items: ItemsListProps[];
   total: number;
   submit: (values: FormikValues) => Promise<void>;
   values: FormikValues;
+  isProcessing: boolean;
 }
 
-const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
+const Payment: React.FC<Props> = ({
+  items,
+  total,
+  submit,
+  values,
+  isProcessing,
+}) => {
   const shippingFixed = parseFloat(values.shipping.replace(",", "."));
   const totalToPay = total + shippingFixed;
   const totalToPayFixed = Number(totalToPay.toFixed(2));
@@ -21,7 +30,7 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
       <div className={styles.cartReview}>
         <div>
           {items &&
-            items.map((item: any) => (
+            items.map((item) => (
               <CartDetails
                 item={item}
                 key={`${item._id}${item.size}`}
@@ -41,7 +50,8 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
         <button
           type="button"
           onClick={() => submit(values)}
-          className={styles.backBtn}>
+          className={styles.backBtn}
+          disabled={isProcessing}>
           pay {totalToPayFixed}
         </button>
       </div>
@@ -49,7 +59,7 @@ const Payment: React.FC<Props> = ({ items, total, submit, values }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StateType) => {
   const { cart } = state;
   return {
     items: cart.cartItems,

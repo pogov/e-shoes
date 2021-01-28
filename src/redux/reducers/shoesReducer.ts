@@ -1,4 +1,4 @@
-import { ActionTypes } from "../actions/shoesActions";
+import { ActionTypes, DispatchProp } from "../actions/shoesActions";
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 const initialState = {
@@ -6,16 +6,21 @@ const initialState = {
   loading: false,
   next: {},
   previous: null,
+  errors: null,
 };
 
-type Initial = {
+export type ShoesInitial = {
   shoes: ItemsListProps[];
   loading: boolean;
   next: object;
   previous: object | null;
+  errors: { message: string } | null;
 };
 
-export const shoes = (state: Initial = initialState, action: any) => {
+export const shoes = (
+  state: ShoesInitial = initialState,
+  action: DispatchProp,
+) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -25,25 +30,34 @@ export const shoes = (state: Initial = initialState, action: any) => {
       return { ...state, loading: true };
 
     case ActionTypes.GET_ITEMS_SUCCES:
-      return {
-        shoes: [...state.shoes, ...payload.shoes],
-        loading: false,
-        next: payload.next,
-        previous: payload.previous,
-        left: payload.left,
-      };
+      if (payload && payload.shoes)
+        return {
+          shoes: [...state.shoes, ...payload.shoes],
+          loading: false,
+          next: payload.next,
+          previous: payload.previous,
+          left: payload.left,
+        };
+      break;
 
     case ActionTypes.GET_ITEMS_SUCCES_QUERY:
-      return {
-        shoes: [...payload.shoes],
-        loading: false,
-        next: payload.next,
-        previous: payload.previous,
-        left: payload.left,
-      };
+      if (payload && payload.shoes)
+        return {
+          shoes: [...payload.shoes],
+          loading: false,
+          next: payload.next,
+          previous: payload.previous,
+          left: payload.left,
+        };
+      break;
 
     case ActionTypes.GET_ITEMS_FAILURE:
-      console.log(payload);
+      if (payload)
+        return {
+          ...state,
+          loading: false,
+          errors: payload.error,
+        };
       break;
 
     default:

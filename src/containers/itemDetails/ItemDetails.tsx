@@ -5,6 +5,7 @@ import { ItemDetailsProps } from "../../interfaces/ItemDetailsProps";
 import { addToCart } from "../../redux/actions/cartActions";
 import DropdownMenu from "../../components/dropDown/DropdownMenu";
 import styles from "./ItemDetails.module.scss";
+import { Dispatch } from "redux";
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
   item,
@@ -53,14 +54,15 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <p>{price} PLN</p>
           </div>
           <div className={styles.btnContainer}>
-            {/* {isChosenSize && <p>your size: {chosenSize}</p>} */}
             <DropdownMenu
               list={sizes}
               header="choose size"
               handler={handleClick}
             />
             <br />
-            <button onClick={handleAddItem}>add to cart</button>
+            <button onClick={handleAddItem} data-testid="addItem">
+              add to cart
+            </button>
             {error.length > 0 && !isChosenSize && (
               <p className={styles.error}>{error}</p>
             )}
@@ -88,7 +90,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   addItemToCart: (
     id: string,
     size: number,

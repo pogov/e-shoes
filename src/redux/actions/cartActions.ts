@@ -48,3 +48,9 @@ export const setShippingValue = (shippingValue: string) => ({
   type: CartActionTypes.SET_SHIPPING,
   payload: { shippingValue },
 });
+
+export type AllCartActionsPayload = {
+  _id: string;
+  price: number;
+  shippingValue: string;
+};

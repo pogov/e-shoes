@@ -14,6 +14,12 @@ const ItemCard: React.FC<ItemsListProps> = (item) => {
           <p>{item.name}</p>
           <p>Price: {item.price}</p>
         </div>
+        <div className={styles.sizes}>
+          <p>Sizes:</p>
+          {item.sizes.map((size) => (
+            <p key={size}>{size}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

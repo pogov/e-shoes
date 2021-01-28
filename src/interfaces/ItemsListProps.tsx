@@ -5,6 +5,7 @@ export interface ItemsListProps {
   price: number;
   description: string;
   sizes: number[];
+  size?: number;
   tags: string[];
   imgSrc: string;
   quantity?: number;

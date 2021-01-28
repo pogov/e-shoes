@@ -7,17 +7,22 @@ import styles from "./NavBar.module.scss";
 
 const NavBar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const modalRef = useRef(null);
-  useClickOutside(modalRef.current!, setIsModalOpen);
+
+  const current = modalRef.current;
+
+  const toggle = () => setIsModalOpen((prev) => !prev);
+
+  useClickOutside(current!, setIsModalOpen);
+
   return (
     <header className={styles.header}>
       <nav ref={modalRef} className={styles.nav}>
-        <div className={styles.innerWrapper}>
-          <div className={styles.logoWrapper}>e-Shoes</div>
-          <SearchBar />
-        </div>
-        <CartIcon handler={setIsModalOpen} />
-        {isModalOpen && <CartModal handler={setIsModalOpen} />}
+        <div className={styles.logoWrapper}>e-Shoes</div>
+        <SearchBar />
+        <CartIcon data-testid="icon" onClick={toggle} />
+        {isModalOpen && <CartModal handler={toggle} />}
       </nav>
     </header>
   );

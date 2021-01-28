@@ -2,6 +2,7 @@ import React from "react";
 import { FormikValues } from "formik";
 import styles from "./ConfirmationPage.module.scss";
 import CartDetails from "../../components/cartDetails/CartDetails";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
 
 interface Props {
   values: FormikValues;
@@ -16,7 +17,7 @@ const ConfirmationPage: React.FC<Props> = ({ values }) => {
       <p>Your payment status is confirmed!</p>
       <p>You have bought:</p>
       <div className={styles.boughtItems}>
-        {boughtItems.map((item: any) => (
+        {boughtItems.map((item: ItemsListProps) => (
           <CartDetails
             item={item}
             key={`${item._id}${item.size}`}
@@ -24,7 +25,10 @@ const ConfirmationPage: React.FC<Props> = ({ values }) => {
           />
         ))}
       </div>
-      <p>All item will be sent to you as soon as possible.</p>
+      <p>
+        All item will be sent to you as soon as possible at following address:
+      </p>
+      <p>{values.address}</p>
     </div>
   );
 };

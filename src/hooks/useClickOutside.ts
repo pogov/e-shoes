@@ -1,12 +1,20 @@
 import { useCallback, useEffect } from "react";
 
-const useClickOutside = (current: HTMLDivElement, setter: any) => {
+const useClickOutside = (
+  current: HTMLDivElement,
+  setter: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const clickOutside = useCallback(
     (e: MouseEvent) => {
-      const target = e.target ? e.target : "";
-
-      const doesCurrentContainsTarget = (ref: HTMLDivElement, target: any) => {
-        return ref.contains(target);
+      const target = e.target;
+      const doesCurrentContainsTarget = (
+        ref: HTMLDivElement,
+        target: EventTarget | null,
+      ) => {
+        if (target instanceof HTMLElement) {
+          return ref.contains(target);
+        }
+        return true;
       };
 
       if (!current || doesCurrentContainsTarget(current, target)) return null;

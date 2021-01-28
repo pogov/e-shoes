@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { CartIconProps } from "../../interfaces/CartIconProps";
-import { Initial } from "../../redux/reducers/cartReducer";
+import { StateType } from "../../interfaces/StateType";
 import styles from "./CartIcon.module.scss";
 import { ReactComponent as Icon } from "../../assets/icon.svg";
 
-type State = {
-  cart: Initial;
-};
-
-const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
+const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, onClick }) => {
   const [triggerAnimation, setTriggerAnimationTo] = useState(false);
   const itemNumberElement = useRef<HTMLDivElement>(null);
 
@@ -24,12 +20,11 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
   }, [itemCount]);
 
   return (
-    <div
-      className={styles.cartIcon}
-      onClick={() => handler((prev: any) => !prev)}>
+    <div className={styles.cartIcon} onClick={onClick} data-testid="icon">
       <Icon className={styles.icon} />
       {isItem && (
         <div
+          data-testid="number"
           ref={itemNumberElement}
           className={
             triggerAnimation ? styles.itemNumberActive : styles.itemNumber
@@ -41,7 +36,7 @@ const CartIcon: React.FC<CartIconProps> = ({ isItem, itemCount, handler }) => {
   );
 };
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: StateType) => {
   const { cart } = state;
   return {
     isItem: cart.itemCount > 0,

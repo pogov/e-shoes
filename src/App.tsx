@@ -7,8 +7,15 @@ import Checkout from "./pages/Checkout";
 import MainTemplate from "./layouts/MainTemplate";
 import ItemDetailsTemplate from "./pages/ItemDetailsTemplate";
 import "./App.scss";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { StateType } from "./interfaces/StateType";
 
-const App: React.FC = ({ getItems }: any) => {
+interface Props {
+  getItems: (page: number, limit: number) => Promise<void>;
+}
+
+const App: React.FC<Props> = ({ getItems }) => {
   useEffect(() => {
     getItems(1, 9);
   }, [getItems]);
@@ -26,7 +33,9 @@ const App: React.FC = ({ getItems }: any) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<StateType, undefined, AnyAction>,
+) => {
   return {
     getItems: (page: number, limit: number, query?: string) =>
       dispatch(getItems(page, limit, query)),

@@ -20,9 +20,24 @@
         transition: .5s ease;
         padding: 0 1em;
         color: darkslategray;
-        font-size: 1.1em;
+        font-size: .9em;
         font-weight: 500;
         text-align: start;
+
+        p{
+            margin:0;
+            margin-top: .5em;
+        }
+
+        .sizes{
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: .5em;
+
+            p{
+                margin-right: .5em;
+            }
+        }
     }
 
     &:hover .info{

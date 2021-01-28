@@ -9,15 +9,18 @@ import {
 } from "../../redux/actions/cartActions";
 import styles from "./CartModal.module.scss";
 import CartDetails from "../../components/cartDetails/CartDetails";
+import { Dispatch } from "redux";
+import { ItemsListProps } from "../../interfaces/ItemsListProps";
+import { StateType } from "../../interfaces/StateType";
 
 type CartModalProps = {
-  items: any;
+  items: ItemsListProps[];
   total: number;
-  clear: any;
-  handler: any;
-  increase: any;
-  decrease: any;
-  deleteItem: any;
+  clear: typeof clearCart;
+  handler: () => void;
+  increase: typeof increaseQuantity;
+  decrease: typeof decreaseQuantity;
+  deleteItem: typeof deleteItem;
 };
 
 const CartModal: React.FC<CartModalProps> = ({
@@ -35,7 +38,7 @@ const CartModal: React.FC<CartModalProps> = ({
         <Link
           to="/cart"
           className={styles.checkoutBtn_Link}
-          onClick={() => handler(false)}>
+          onClick={() => handler()}>
           checkout
         </Link>
       );
@@ -55,9 +58,9 @@ const CartModal: React.FC<CartModalProps> = ({
         <div className={styles.innerWrapper}>
           <div className={styles.list}>
             {items &&
-              items.map((item: any) => (
+              items.map((item: ItemsListProps) => (
                 <CartDetails
-                  key={`${item._id}${item.size}`}
+                  key={`${item._id}${item.sizes}`}
                   item={item}
                   increase={increase}
                   decrease={decrease}
@@ -81,7 +84,7 @@ const CartModal: React.FC<CartModalProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StateType) => {
   const { cart } = state;
   return {
     items: cart.cartItems,
@@ -89,7 +92,7 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     clear: () => dispatch(clearCart()),
     increase: (id: string) => dispatch(increaseQuantity(id)),
