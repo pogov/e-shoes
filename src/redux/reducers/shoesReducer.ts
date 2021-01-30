@@ -7,16 +7,18 @@ const initialState = {
   next: { page: 1, limit: 9 },
   previous: null,
   errors: null,
+  count: null,
 };
 
 export type ShoesInitial = {
   shoes: ItemsListProps[];
   loading: boolean;
   next: { page: number; limit: number };
-  previous: object | null;
+  previous: { page: number; limit: number } | null;
   errors: { message: string } | null;
   query?: string;
   left?: number;
+  count: number | null;
 };
 
 export const shoes = (
@@ -32,11 +34,12 @@ export const shoes = (
     case ActionTypes.GET_ITEMS_SUCCES:
       if (payload && payload.shoes)
         return {
-          shoes: [...state.shoes, ...payload.shoes],
+          shoes: [...payload.shoes],
           loading: false,
           next: payload.next,
           previous: payload.previous,
           left: payload.left,
+          count: payload.count,
         };
       break;
 

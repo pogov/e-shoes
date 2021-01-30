@@ -2,18 +2,21 @@ import React from "react";
 import styles from "./Pagination.module.scss";
 
 interface Props {
-  next: { page: number; limit: number };
-  left?: number;
-  handler: (next: any) => void;
+  handler: (direction: string) => void;
+  buttonsState: string;
 }
 
-const Pagination: React.FC<Props> = ({ next, left, handler }) => {
+const Pagination: React.FC<Props> = ({ handler, buttonsState }) => {
+  console.log(buttonsState);
   return (
     <div className={styles.wrapper}>
       <div className={styles.pagination}>
-        {[...Array(1).keys()].slice(1).map((n) => (
-          <button className={styles.number}>{n}</button>
-        ))}
+        {buttonsState !== "start" && buttonsState !== "none" && (
+          <button onClick={() => handler("prev")}>previous page</button>
+        )}
+        {buttonsState !== "end" && buttonsState !== "none" && (
+          <button onClick={() => handler("next")}>next page</button>
+        )}
       </div>
     </div>
   );

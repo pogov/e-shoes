@@ -15,6 +15,7 @@ export type DispatchProp = {
     left?: boolean;
     error?: {};
     query?: string;
+    count?: number;
   };
   // payload?: ShoesInitial & { left: boolean } & { error: {} };
 };
