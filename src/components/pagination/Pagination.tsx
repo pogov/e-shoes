@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Pagination: React.FC<Props> = ({ handler, buttonsState }) => {
-  console.log(buttonsState);
   return (
     <div className={styles.wrapper}>
       <div className={styles.pagination}>
