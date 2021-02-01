@@ -6,9 +6,7 @@ interface Props {
 }
 
 const Loader: React.FC<Props> = ({ errors }) => (
-  <div className={styles.loader}>
-    {errors ? <h1>{errors.message}</h1> : <h1>Loading...</h1>}
-  </div>
+  <div className={styles.loader}>{errors && <h1>{errors.message}</h1>}</div>
 );
 
 export default Loader;
