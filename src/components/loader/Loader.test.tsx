@@ -10,11 +10,6 @@ describe("Loader", () => {
     expect(renderLoader).not.toThrow();
   });
 
-  it("displays Loading... message", () => {
-    const { getByText } = render(<Loader />);
-    expect(getByText("Loading...")).not.toBeNull();
-  });
-
   it("not displays Loading... message when errors", () => {
     const error = { message: "Error message" };
     const container = render(<Loader errors={error} />);
