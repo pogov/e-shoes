@@ -22,6 +22,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
   return (
     <div ref={dropdownRef} className={styles.menu}>
       <div
+        aria-label="select size option"
         data-testid="header"
         className={styles.header}
         onClick={() => setIsVisible(!isVisible)}>
@@ -31,6 +32,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ list, header, handler }) => {
         <div data-testid="optionsList" className={styles.list}>
           {list.map((item: string | number) => (
             <div
+              aria-label="size option"
               key={item}
               className={styles.listItem}
               onClick={(event) => handleClick(event, item)}>

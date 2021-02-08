@@ -2,11 +2,14 @@ import { Stripe, StripeElements, StripeError } from "@stripe/stripe-js";
 import { CartActionTypes } from "../../redux/actions/cartActions";
 
 const getClientSecretKey = async (amount: number) => {
-  const data = await fetch("http://localhost:5500/payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount }),
-  });
+  const data = await fetch(
+    "https://e-shoes-backend.herokuapp.com/payment-intent",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount }),
+    },
+  );
 
   const { client_secret } = await data.json();
   return client_secret;

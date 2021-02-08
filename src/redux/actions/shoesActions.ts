@@ -26,7 +26,7 @@ export const getItems = (page: number, limit: number, query?: string) => (
   dispatch({ type: ActionTypes.GET_ITEMS_REQUEST });
 
   return fetch(
-    `http://localhost:5500/api/items?page=${page}&limit=${limit}&query=${query}`,
+    `https://e-shoes-backend.herokuapp.com/api/items?page=${page}&limit=${limit}&query=${query}`,
   )
     .then((res) => res.json())
     .then((result) => {
