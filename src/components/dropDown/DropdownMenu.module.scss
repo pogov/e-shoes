@@ -2,6 +2,7 @@
     width: 100%;
     border: 1px solid black;
     cursor: pointer;
+    position: relative;
 
     .header{
         width: 100%;
@@ -9,6 +10,11 @@
 
     .list{
         width: 100%;
+        position: absolute;
+        z-index: 100;
+        background-color: white;
+        border: 1px solid black;
+
 
         .listItem{
             width: 100%;

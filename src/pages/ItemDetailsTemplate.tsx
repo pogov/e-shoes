@@ -18,6 +18,11 @@ const ItemDetailsTemplate: React.FC<Props> = ({ shoe }) => {
   const [item, setItem] = useState<ItemsListProps>();
   const [chosenSize, setChosenSize] = useState<number>(0);
 
+  const BASE_URL =
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_HEROKU_BASE_URL
+      : "http://localhost:5500";
+
   const handleClick = (e: React.MouseEvent) => {
     const input = e.target as HTMLElement;
     if (!input || !input.textContent) return;
@@ -26,12 +31,12 @@ const ItemDetailsTemplate: React.FC<Props> = ({ shoe }) => {
 
   useEffect(() => {
     if (!shoe) {
-      fetch(`http://localhost:5500/api/items/${id}`)
+      fetch(`${BASE_URL}/api/items/${id}`)
         .then((res) => res.json())
         .then((data) => setItem(data));
     }
     setItem(shoe);
-  }, [shoe, id]);
+  }, [shoe, id, BASE_URL]);
 
   if (!item) return null;
 

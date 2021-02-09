@@ -10,15 +10,19 @@ export type DispatchProp = {
   type: ActionTypes;
   payload?: {
     shoes?: ItemsListProps[];
-    next?: {};
-    previous?: {};
+    next?: { page: number; limit: number };
+    previous?: { page: number; limit: number };
     left?: boolean;
     error?: {};
     query?: string;
     count?: number;
   };
-  // payload?: ShoesInitial & { left: boolean } & { error: {} };
 };
+
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_HEROKU_BASE_URL
+    : "http://localhost:5500";
 
 export const getItems = (page: number, limit: number, query?: string) => (
   dispatch: ({ type }: DispatchProp) => void,
@@ -26,7 +30,7 @@ export const getItems = (page: number, limit: number, query?: string) => (
   dispatch({ type: ActionTypes.GET_ITEMS_REQUEST });
 
   return fetch(
-    `https://e-shoes-backend.herokuapp.com/api/items?page=${page}&limit=${limit}&query=${query}`,
+    `${BASE_URL}/api/items?page=${page}&limit=${limit}&query=${query}`,
   )
     .then((res) => res.json())
     .then((result) => {

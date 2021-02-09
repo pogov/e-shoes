@@ -17,6 +17,7 @@
     background-color: black;
     text-align: center;
     transition: all .2s ease;
+
     &:hover{
         opacity: .6;
     }
@@ -27,6 +28,9 @@
     .grid{
         display: grid;
         grid-template-columns: 2fr 1fr;;
+        @media screen and (max-width: 800px){
+            grid-template-columns: 1fr;
+        }
 
         img{
             width: 100%;
@@ -37,7 +41,7 @@
             padding: 2em;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 5em 1fr 2fr;
+            grid-template-rows: 5em 1fr 1fr;
             
             nav{
                 grid-column: span 2;

@@ -1,15 +1,17 @@
 import { Stripe, StripeElements, StripeError } from "@stripe/stripe-js";
 import { CartActionTypes } from "../../redux/actions/cartActions";
 
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_HEROKU_BASE_URL
+    : "http://localhost:5500";
+
 const getClientSecretKey = async (amount: number) => {
-  const data = await fetch(
-    "https://e-shoes-backend.herokuapp.com/payment-intent",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount }),
-    },
-  );
+  const data = await fetch(`${BASE_URL}/payment-intent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount }),
+  });
 
   const { client_secret } = await data.json();
   return client_secret;

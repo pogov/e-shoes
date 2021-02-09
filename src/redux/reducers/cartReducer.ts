@@ -1,5 +1,5 @@
 import { ItemsListProps } from "../../interfaces/ItemsListProps";
-import { CartActionTypes } from "../actions/cartActions";
+import { CartActionTypes, CartActions } from "../actions/cartActions";
 import { getFromLocalStorage } from "./reducerHelpers";
 
 const initialState = {
@@ -15,41 +15,29 @@ export type Initial = {
   cartItems: ItemsListProps[];
 };
 
-export type ActionProp = {
-  type: CartActionTypes;
-  payload?: {
-    _id: string;
-    price: number;
-    shippingValue: string;
-  };
-  // payload?: AllCartActionsPayload;
-};
-
-const initialFromLocalStorage = getFromLocalStorage<Initial>(
+const initialFromLocalStorage: Initial = getFromLocalStorage<Initial>(
   "e_Shoes-cart",
   initialState,
 );
 
 export const cart = (
   state: Initial = initialFromLocalStorage,
-  action: ActionProp,
+  action: CartActions,
 ) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    //
+  switch (action.type) {
     case CartActionTypes.ADD_TO_CART:
-      if (!payload) return state;
+      const addPayload = action.payload;
 
       const ifCartAlreadyContains =
-        state.cartItems.filter((item) => item._id === payload._id).length > 0;
+        state.cartItems.filter((item) => item._id === addPayload._id).length >
+        0;
       if (ifCartAlreadyContains) return state;
 
-      const newTotal = state.total + payload.price;
+      const newTotal = state.total + addPayload.price;
       const newTotalFixed = Number(newTotal.toFixed(2));
 
       return {
-        cartItems: [...state.cartItems, { ...payload }],
+        cartItems: [...state.cartItems, { ...addPayload }],
         itemCount: state.itemCount + 1,
         total: newTotalFixed,
       };
@@ -62,10 +50,9 @@ export const cart = (
       };
 
     case CartActionTypes.DELETE_ITEM:
-      if (!payload) return state;
-
+      const deletePayload = action.payload;
       const [itemToDelete] = state.cartItems.filter(
-        (item) => item._id === payload._id,
+        (item) => item._id === deletePayload._id,
       );
 
       if (!itemToDelete.quantity) return;
@@ -76,15 +63,14 @@ export const cart = (
         itemCount: state.itemCount - itemToDelete.quantity,
         total: fixedCalculatedTotal,
         cartItems: [
-          ...state.cartItems.filter((item) => item._id !== payload._id),
+          ...state.cartItems.filter((item) => item._id !== deletePayload._id),
         ],
       };
 
     case CartActionTypes.INCREASE_QUANTITY:
-      if (!payload) return state;
-
+      const increasePayload = action.payload;
       const [itemToIncrease] = state.cartItems.filter(
-        (item) => item._id === payload._id,
+        (item) => item._id === increasePayload._id,
       );
       if (!itemToIncrease) return;
       const itemToIncreaseCopy = { ...itemToIncrease };
@@ -97,16 +83,15 @@ export const cart = (
       return {
         itemCount: state.itemCount + 1,
         cartItems: [
-          ...state.cartItems.filter((item) => item._id !== payload._id),
+          ...state.cartItems.filter((item) => item._id !== increasePayload._id),
           itemToIncreaseCopy,
         ],
         total: fixedIncreasedTotal,
       };
 
     case CartActionTypes.DECREASE_QUANTITY:
-      if (!payload) return state;
-
-      const { _id } = payload;
+      const decreasePayload = action.payload;
+      const { _id } = decreasePayload;
 
       const [itemToDecrease] = state.cartItems.filter(
         (item) => item._id === _id,
@@ -123,18 +108,18 @@ export const cart = (
       return {
         itemCount: state.itemCount - 1,
         cartItems: [
-          ...state.cartItems.filter((item) => item._id !== payload._id),
+          ...state.cartItems.filter((item) => item._id !== decreasePayload._id),
           itemToDecreaseCopy,
         ],
         total: fixedDecreasedTotal,
       };
 
     case CartActionTypes.SET_SHIPPING:
-      if (!payload) return state;
+      const shippingPayload = action.payload;
 
       return {
         ...state,
-        shipping: parseFloat(payload.shippingValue.replace(",", ".")),
+        shipping: parseFloat(shippingPayload.shippingValue.replace(",", ".")),
       };
 
     default:
