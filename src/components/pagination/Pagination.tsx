@@ -3,7 +3,7 @@ import styles from "./Pagination.module.scss";
 
 interface Props {
   handler: (direction: string) => void;
-  buttonsState: string;
+  buttonsState: "start" | "prev" | "end" | "middle" | "none";
 }
 
 const Pagination: React.FC<Props> = ({ handler, buttonsState }) => {

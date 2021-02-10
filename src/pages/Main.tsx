@@ -26,7 +26,9 @@ const Main: React.FC<Props> = ({
   previous,
   left,
 }) => {
-  const [buttonsState, setButtonsState] = useState("start");
+  const [buttonsState, setButtonsState] = useState<
+    "start" | "prev" | "end" | "middle" | "none"
+  >("start");
 
   const handleClick = (direction: string) => {
     if (direction === "next" && next) {

@@ -1,6 +1,6 @@
 export function getFromLocalStorage<T>(key: string, initialValue: T) {
   const readValue = () => {
-    if (typeof window === "undefined") {
+    if (typeof localStorage === "undefined") {
       return initialValue;
     }
     try {
