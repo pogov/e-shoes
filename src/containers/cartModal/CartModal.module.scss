@@ -18,6 +18,11 @@
     animation: opening .3s ease-in-out;
     transform-origin: top;
     overflow-y: scroll;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
 
     @media screen and (max-width: 700px){
         min-width: 85vw;
