@@ -10,6 +10,10 @@
 
 [https://thirsty-johnson-2e276d.netlify.app]
 
+## Code for backend:
+
+[https://github.com/pogov/e-shoes-backend]
+
 In the project directory, you can run:
 
 ### `npm start`
